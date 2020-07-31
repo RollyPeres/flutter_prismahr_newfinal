@@ -9,7 +9,7 @@ class AppTheme {
   );
 
   static final ThemeData lightTheme = ThemeData.light().copyWith(
-    accentColor: bgLight,
+    accentColor: primary,
     appBarTheme: AppBarTheme(
       brightness: Brightness.light,
       color: bgLight,
@@ -35,7 +35,7 @@ class AppTheme {
   );
 
   static final ThemeData darkTheme = ThemeData.dark().copyWith(
-    accentColor: bgDark,
+    accentColor: primary,
     appBarTheme: AppBarTheme(
       brightness: Brightness.dark,
       color: bgDark,
