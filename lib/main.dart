@@ -2,9 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:flutter_prismahr/app/bloc/theme_bloc.dart';
-import 'package:flutter_prismahr/app/bloc_observers/simple_bloc_observer.dart';
+import 'package:flutter_prismahr/app/bloc/auth/auth_bloc.dart';
+import 'package:flutter_prismahr/app/bloc/theme/theme_bloc.dart';
+import 'package:flutter_prismahr/app/bloc/simple_bloc_observer.dart';
+import 'package:flutter_prismahr/app/data/providers/auth_provider.dart';
+import 'package:flutter_prismahr/app/data/repositories/auth_repository.dart';
+import 'package:flutter_prismahr/app/routes/router.dart';
+import 'package:flutter_prismahr/app/routes/routes.dart';
 import 'package:flutter_prismahr/app/themes/themes.dart';
+import 'package:flutter_prismahr/app/views/home.dart';
+import 'package:flutter_prismahr/app/views/login.dart';
+import 'package:flutter_prismahr/app/views/splash.dart';
+import 'package:flutter_prismahr/utils/request.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 
 void main() async {
@@ -18,10 +27,34 @@ void main() async {
   HydratedBloc.storage = await HydratedStorage.build();
   Bloc.observer = SimpleBlocObserver();
 
-  runApp(MyApp());
+  runApp(MyApp(
+    repository: AuthRepository(
+      provider: AuthProvider(
+        httpClient: Request.dio,
+      ),
+    ),
+  ));
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  final AuthRepository repository;
+  MyApp({@required this.repository});
+
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  AuthBloc authBloc;
+  AuthRepository get repository => widget.repository;
+
+  @override
+  void initState() {
+    authBloc = AuthBloc(repository: repository);
+    authBloc.add(AppStarted());
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     // Lock device orientation
@@ -30,9 +63,14 @@ class MyApp extends StatelessWidget {
     ]);
 
     return AnnotatedRegion<SystemUiOverlayStyle>(
-      value: SystemUiOverlayStyle(statusBarColor: Colors.transparent),
-      child: BlocProvider(
-        create: (context) => ThemeBloc(),
+      value: SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent,
+      ),
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider(create: (context) => ThemeBloc()),
+          BlocProvider(create: (context) => authBloc),
+        ],
         child: BlocBuilder<ThemeBloc, ThemeState>(
           builder: _buildWithTheme,
         ),
@@ -40,39 +78,37 @@ class MyApp extends StatelessWidget {
     );
   }
 
-  Widget _buildWithTheme(BuildContext context, ThemeState state) {
+  Widget _buildWithTheme(
+    BuildContext context,
+    ThemeState state,
+  ) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: DotEnv().env['APP_NAME'],
       darkTheme: AppTheme.darkTheme,
       theme: AppTheme.lightTheme,
       themeMode: state.themeMode,
-      home: Scaffold(
-        body: Center(child: Text('Hello World!')),
-        floatingActionButton: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: <Widget>[
-            FloatingActionButton(
-              onPressed: () {
-                BlocProvider.of<ThemeBloc>(context)
-                    .add(ThemeSwitched(themeMode: ThemeMode.light));
-              },
-              tooltip: 'Increment',
-              child: Icon(Icons.lightbulb_outline),
-            ),
-            SizedBox(height: 10),
-            FloatingActionButton(
-              onPressed: () {
-                BlocProvider.of<ThemeBloc>(context)
-                    .add(ThemeSwitched(themeMode: ThemeMode.dark));
-              },
-              tooltip: 'Increment',
-              child: Icon(Icons.remove),
-            ),
-          ],
-        ),
+      initialRoute: Routes.HOME,
+      onGenerateRoute: Router.generateRoute,
+      home: BlocBuilder<AuthBloc, AuthState>(
+        builder: (context, state) {
+          if (state is AuthUnauthenticated) {
+            return LoginScreen(repository: repository);
+          }
+
+          if (state is AuthAuthenticated) {
+            return HomePage();
+          }
+
+          return SplashScreen();
+        },
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    authBloc.close();
+    super.dispose();
   }
 }
