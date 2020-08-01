@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_prismahr/app/components/button.dart';
+import 'package:flutter_prismahr/app/routes/routes.dart';
 
 class BottomNavbar extends StatelessWidget {
   const BottomNavbar({Key key}) : super(key: key);
@@ -27,8 +28,7 @@ class BottomNavbar extends StatelessWidget {
             IconButton(
               icon: Icon(Icons.account_circle, color: Colors.grey[300]),
               onPressed: () {
-                // TODO: implement navigator
-                // Navigator.of(context).pushNamed(Routes.ACCOUNT_INFO);
+                Navigator.of(context).pushNamed(Routes.ACCOUNT_INFO);
               },
             ),
             Container(),

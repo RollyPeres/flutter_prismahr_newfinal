@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_prismahr/app/components/badge.dart';
 import 'package:flutter_prismahr/app/components/rounded_rectangle_avatar.dart';
+import 'package:flutter_prismahr/app/routes/routes.dart';
 
 class Header extends StatelessWidget {
   const Header({Key key}) : super(key: key);
@@ -45,8 +46,7 @@ class Header extends StatelessWidget {
           GestureDetector(
             child: RoundedRectangleAvatar(),
             onTap: () {
-              // TODO: implement route
-              // Get.toNamed(Routes.ACCOUNT_INFO);
+              Navigator.of(context).pushNamed(Routes.ACCOUNT_INFO);
             },
           ),
         ],

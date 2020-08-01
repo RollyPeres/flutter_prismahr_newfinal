@@ -14,6 +14,7 @@ class AppTheme {
       brightness: Brightness.light,
       color: bgLight,
       elevation: 0,
+      iconTheme: IconThemeData(color: Colors.black87),
       textTheme: TextTheme(
         headline6: TextStyle(color: Colors.black87, fontSize: 20),
       ),
