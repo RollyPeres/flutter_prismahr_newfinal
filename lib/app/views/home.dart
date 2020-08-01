@@ -1,37 +1,61 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_prismahr/app/bloc/theme/theme_bloc.dart';
+import 'package:flutter_prismahr/app/views/widgets/home/announcement_card.dart';
+import 'package:flutter_prismahr/app/views/widgets/home/bottom_navbar.dart';
+import 'package:flutter_prismahr/app/views/widgets/home/header.dart';
+import 'package:flutter_prismahr/app/views/widgets/home/menu_grid.dart';
+import 'package:flutter_prismahr/app/views/widgets/home/performance_chart.dart';
+import 'package:flutter_prismahr/app/views/widgets/home/week_counter.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({Key key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(child: Text('Hello World!')),
-      floatingActionButton: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: <Widget>[
-          FloatingActionButton(
-            onPressed: () {
-              BlocProvider.of<ThemeBloc>(context)
-                  .add(ThemeSwitched(themeMode: ThemeMode.light));
-            },
-            tooltip: 'Increment',
-            child: Icon(Icons.lightbulb_outline),
-          ),
-          SizedBox(height: 10),
-          FloatingActionButton(
-            onPressed: () {
-              BlocProvider.of<ThemeBloc>(context)
-                  .add(ThemeSwitched(themeMode: ThemeMode.dark));
-            },
-            tooltip: 'Increment',
-            child: Icon(Icons.remove),
-          ),
-        ],
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.only(top: 25),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Header(),
+            WeekCounter(month: 'August', ordinal: '1st'),
+            PerformanceChart(),
+            MenuGrid(),
+            Container(
+              height: 130,
+              child: PageView(
+                controller: PageController(viewportFraction: 0.9),
+                scrollDirection: Axis.horizontal,
+                children: <Widget>[
+                  AnnouncementCard(
+                      onTap: () {},
+                      title: 'Covid-19 Alert!',
+                      subtitle:
+                          'Regardless of the current pandemic, our company decided to '
+                          'stop office...'),
+                  AnnouncementCard(
+                      onTap: () {},
+                      title: 'Covid-19 Alert!',
+                      subtitle:
+                          'Regardless of the current pandemic, our company decided to '
+                          'stop office...'),
+                  AnnouncementCard(
+                      onTap: () {},
+                      title: 'Covid-19 Alert!',
+                      subtitle:
+                          'Regardless of the current pandemic, our company decided to '
+                          'stop office...'),
+                  AnnouncementCard(
+                      onTap: () {},
+                      title: 'Covid-19 Alert!',
+                      subtitle:
+                          'Regardless of the current pandemic, our company decided to '
+                          'stop office...'),
+                ],
+              ),
+            )
+          ],
+        ),
       ),
+      bottomNavigationBar: BottomNavbar(),
     );
   }
 }
