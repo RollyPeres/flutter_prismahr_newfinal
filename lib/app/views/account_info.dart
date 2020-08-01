@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_prismahr/app/components/listview_group.dart';
 import 'package:flutter_prismahr/app/components/listview_group_title.dart';
+import 'package:flutter_prismahr/app/routes/routes.dart';
 import 'package:flutter_prismahr/app/views/account_info/components/account_completion_card.dart';
 import 'package:flutter_prismahr/app/views/account_info/components/dark_mode_switch.dart';
 import 'package:flutter_prismahr/app/views/account_info/components/header.dart';
@@ -33,7 +34,8 @@ class AccountInfoScreen extends StatelessWidget {
                   icon: 'assets/icons/icon-user-circle.svg',
                   label: 'Personal',
                   onTap: () {
-                    // Get.toNamed(Routes.PERSONAL_INFO);
+                    Navigator.of(context)
+                        .pushNamed(Routes.ACCOUNT_INFO_PERSONAL);
                   },
                 ),
                 ProfileMenu(
