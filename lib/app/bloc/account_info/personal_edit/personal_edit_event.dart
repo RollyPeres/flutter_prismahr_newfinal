@@ -11,12 +11,12 @@ class PersonalEditSubmitButtonPressed extends PersonalEditEvent {
   final String maritalStatus;
   final String religion;
   final String bloodType;
-  final int idNumber;
+  final String idNumber;
   final String idType;
   final String idExpiryDate;
   final String address;
   final String addressCurrent;
-  final int postcode;
+  final String postcode;
 
   const PersonalEditSubmitButtonPressed({
     @required this.gender,
