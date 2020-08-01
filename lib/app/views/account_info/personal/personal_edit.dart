@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_prismahr/app/bloc/account_info/personal_edit/personal_edit_bloc.dart';
+import 'package:flutter_prismahr/app/components/dropdown.dart';
 import 'package:flutter_prismahr/app/components/form_group.dart';
 import 'package:flutter_prismahr/app/components/form_input.dart';
 import 'package:flutter_prismahr/app/data/models/account_info/personal_edit_validation_exception_model.dart';
@@ -87,20 +88,20 @@ class _PersonalEditScreenState extends State<PersonalEditScreen> {
                 padding: const EdgeInsets.only(bottom: 10),
                 child: Column(
                   children: <Widget>[
-                    FormInput(
-                      controller: _genderController,
+                    Dropdown(
                       label: 'Gender',
-                      focusNode: _genderFN,
-                      keyboardType: TextInputType.text,
-                      textInputAction: TextInputAction.next,
+                      value: _genderController.text,
                       errorText: _validationException.gender?.first,
-                      onChanged: (value) {
+                      items: <DropdownMenuItem<dynamic>>[
+                        DropdownMenuItem(value: 'Male', child: Text('Male')),
+                        DropdownMenuItem(
+                            value: 'Female', child: Text('Female')),
+                      ],
+                      onChanged: (val) {
                         setState(() {
                           _validationException.gender = null;
+                          _genderController.text = val;
                         });
-                      },
-                      onFieldSubmitted: (_) {
-                        _birthdateFN.requestFocus();
                       },
                     ),
                     FormInput(
@@ -210,20 +211,21 @@ class _PersonalEditScreenState extends State<PersonalEditScreen> {
                       _idTypeFN.requestFocus();
                     },
                   ),
-                  FormInput(
-                    controller: _idTypeController,
+                  Dropdown(
                     label: 'Type',
-                    focusNode: _idTypeFN,
-                    keyboardType: TextInputType.text,
-                    textInputAction: TextInputAction.next,
+                    value: _idTypeController.text,
                     errorText: _validationException.idType?.first,
-                    onChanged: (value) {
+                    items: <DropdownMenuItem<dynamic>>[
+                      DropdownMenuItem(value: 'KTP', child: Text('KTP')),
+                      DropdownMenuItem(value: 'SIM', child: Text('SIM')),
+                      DropdownMenuItem(
+                          value: 'Passport', child: Text('Passport')),
+                    ],
+                    onChanged: (val) {
                       setState(() {
                         _validationException.idType = null;
+                        _idTypeController.text = val;
                       });
-                    },
-                    onFieldSubmitted: (_) {
-                      _idExpiryDateFN.requestFocus();
                     },
                   ),
                   FormInput(
