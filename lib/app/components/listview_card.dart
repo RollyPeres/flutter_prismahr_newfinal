@@ -18,7 +18,7 @@ class ListViewCard extends StatelessWidget {
       child: ListView.separated(
         primary: false,
         shrinkWrap: true,
-        padding: const EdgeInsets.all(0),
+        padding: const EdgeInsets.symmetric(vertical: 8),
         physics: const NeverScrollableScrollPhysics(),
         itemCount: this.items.length,
         itemBuilder: (context, index) => this.items[index],
