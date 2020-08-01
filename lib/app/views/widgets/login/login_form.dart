@@ -152,10 +152,9 @@ class _LoginFormState extends State<LoginForm> {
     setState(() {
       _userAgent = agent;
     });
-    print(_userAgent);
   }
 
-  void _submit() async {
+  void _submit() {
     _emailFocusNode.unfocus();
     _passwFocusNode.unfocus();
 
