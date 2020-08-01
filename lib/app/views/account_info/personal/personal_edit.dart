@@ -4,11 +4,13 @@ import 'package:flutter_prismahr/app/bloc/account_info/personal_edit/personal_ed
 import 'package:flutter_prismahr/app/components/dropdown.dart';
 import 'package:flutter_prismahr/app/components/form_group.dart';
 import 'package:flutter_prismahr/app/components/form_input.dart';
+import 'package:flutter_prismahr/app/components/form_input_datetime.dart';
 import 'package:flutter_prismahr/app/data/models/account_info/personal_edit_validation_exception_model.dart';
 import 'package:flutter_prismahr/app/data/models/account_info/personal_model.dart';
 import 'package:flutter_prismahr/app/data/providers/account_info/personal_provider.dart';
 import 'package:flutter_prismahr/app/data/repositories/account_info/personal_repository.dart';
 import 'package:flutter_prismahr/utils/request.dart';
+import 'package:intl/intl.dart';
 
 class PersonalEditScreen extends StatefulWidget {
   final PersonalModel data;
@@ -61,15 +63,23 @@ class _PersonalEditScreenState extends State<PersonalEditScreen> {
 
     _validationException = PersonalEditValidationException();
 
+    _birthdateController.text = _data.birthdate != null
+        ? DateFormat.yMMMMd()
+            .format(DateFormat('yyyy-MM-dd').parse(_data.birthdate))
+        : _data.birthdate;
+
+    _idExpiryDateController.text = _data.idExpiryDate != null
+        ? DateFormat.yMMMMd()
+            .format(DateFormat('yyyy-MM-dd').parse(_data.idExpiryDate))
+        : _data.idExpiryDate;
+
     _genderController.text = _data.gender;
     _birthplaceController.text = _data.birthplace;
-    _birthdateController.text = _data.birthdate;
     _marstatController.text = _data.maritalStatus;
     _religionController.text = _data.religion;
     _bloodTypeController.text = _data.bloodType;
     _idNumberController.text = _data.idNumber.toString();
     _idTypeController.text = _data.idType;
-    _idExpiryDateController.text = _data.idExpiryDate;
     _addrController.text = _data.address;
     _addrCurrentController.text = _data.addressCurrent;
     _postcodeController.text = _data.postcode.toString();
@@ -104,20 +114,20 @@ class _PersonalEditScreenState extends State<PersonalEditScreen> {
                         });
                       },
                     ),
-                    FormInput(
+                    FormInputDateTime(
                       controller: _birthdateController,
                       label: 'Birth date',
-                      focusNode: _birthdateFN,
-                      keyboardType: TextInputType.text,
-                      textInputAction: TextInputAction.next,
+                      initialDate: _data.birthdate,
+                      lastDate: DateTime.now(),
                       errorText: _validationException.birthdate?.first,
-                      onChanged: (value) {
+                      onDateSelected: (DateTime date) {
+                        if (date == null) return;
+
                         setState(() {
                           _validationException.birthdate = null;
+                          _birthdateController.text =
+                              DateFormat.yMMMMd().format(date);
                         });
-                      },
-                      onFieldSubmitted: (_) {
-                        _birthplaceFN.requestFocus();
                       },
                     ),
                     FormInput(
@@ -228,20 +238,19 @@ class _PersonalEditScreenState extends State<PersonalEditScreen> {
                       });
                     },
                   ),
-                  FormInput(
+                  FormInputDateTime(
                     controller: _idExpiryDateController,
                     label: 'Expiration date',
-                    focusNode: _idExpiryDateFN,
-                    keyboardType: TextInputType.text,
-                    textInputAction: TextInputAction.next,
+                    initialDate: _data.idExpiryDate,
                     errorText: _validationException.idExpiryDate?.first,
-                    onChanged: (value) {
+                    onDateSelected: (DateTime date) {
+                      if (date == null) return;
+
                       setState(() {
-                        _validationException.idExpiryDate = null;
+                        _validationException.birthdate = null;
+                        _idExpiryDateController.text =
+                            DateFormat.yMMMMd().format(date);
                       });
-                    },
-                    onFieldSubmitted: (_) {
-                      _addrFN.requestFocus();
                     },
                   ),
                 ],
@@ -378,12 +387,12 @@ class _PersonalEditScreenState extends State<PersonalEditScreen> {
       maritalStatus: _marstatController.text,
       religion: _religionController.text,
       bloodType: _bloodTypeController.text,
-      idNumber: int.parse(_idNumberController.text),
+      idNumber: _idNumberController.text,
       idType: _idTypeController.text,
       idExpiryDate: _idExpiryDateController.text,
       address: _addrController.text,
       addressCurrent: _addrCurrentController.text,
-      postcode: int.parse(_postcodeController.text),
+      postcode: _postcodeController.text,
     ));
   }
 
