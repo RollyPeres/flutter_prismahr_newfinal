@@ -37,6 +37,9 @@ dependencies:
   fl_chart: ^0.11.0
   device_info: ^0.4.2+4
   flutter_svg: ^0.17.4
+  flutter_rounded_date_picker: ^1.0.4 # there is a height issue with this ver.
+  # flutter_rounded_date_picker: ^0.3.0 # this version is fine but the option is limited
+  intl: ^0.16.1
 
 
   # The following adds the Cupertino Icons font to your application.
