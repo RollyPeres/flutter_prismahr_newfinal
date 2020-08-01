@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class FormInput extends StatelessWidget {
+  final bool readOnly;
   final bool autofocus;
   final bool obscureText;
   final FocusNode focusNode;
@@ -17,6 +18,7 @@ class FormInput extends StatelessWidget {
 
   const FormInput({
     Key key,
+    this.readOnly,
     this.autofocus,
     this.focusNode,
     this.label,
@@ -45,6 +47,7 @@ class FormInput extends StatelessWidget {
                   child: Text('${this.label}'))
               : SizedBox(),
           TextFormField(
+            readOnly: this.readOnly ?? false,
             autofocus: this.autofocus ?? false,
             controller: this.controller,
             focusNode: this.focusNode,
