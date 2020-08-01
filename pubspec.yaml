@@ -76,6 +76,42 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
+  fonts:
+    - family: "Nunito Sans"
+      fonts:
+        - asset: fonts/NunitoSans/NunitoSans-Black.ttf
+          weight: 900
+        - asset: fonts/NunitoSans/NunitoSans-BlackItalic.ttf
+          style: italic
+          weight: 900
+        - asset: fonts/NunitoSans/NunitoSans-Bold.ttf
+          weight: 700
+        - asset: fonts/NunitoSans/NunitoSans-BoldItalic.ttf
+          style: italic
+          weight: 700
+        - asset: fonts/NunitoSans/NunitoSans-ExtraBold.ttf
+          weight: 800
+        - asset: fonts/NunitoSans/NunitoSans-ExtraBoldItalic.ttf
+          style: italic
+          weight: 800
+        - asset: fonts/NunitoSans/NunitoSans-ExtraLight.ttf
+          weight: 100
+        - asset: fonts/NunitoSans/NunitoSans-ExtraLightItalic.ttf
+          style: italic
+          weight: 100
+        - asset: fonts/NunitoSans/NunitoSans-SemiBold.ttf
+          weight: 500
+        - asset: fonts/NunitoSans/NunitoSans-SemiBoldItalic.ttf
+          style: italic
+          weight: 500
+        - asset: fonts/NunitoSans/NunitoSans-Italic.ttf
+          style: italic
+        - asset: fonts/NunitoSans/NunitoSans-Light.ttf
+          weight: 300
+        - asset: fonts/NunitoSans/NunitoSans-LightItalic.ttf
+          style: italic
+          weight: 300
+        - asset: fonts/NunitoSans/NunitoSans-Regular.ttf
   # fonts:
   #   - family: Schyler
   #     fonts:
