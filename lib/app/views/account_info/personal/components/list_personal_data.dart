@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_prismahr/app/components/listview_card.dart';
 import 'package:flutter_prismahr/app/components/listview_card_group.dart';
 import 'package:flutter_prismahr/app/data/models/account_info/personal_model.dart';
+import 'package:intl/intl.dart';
 
 class ListPersonalData extends StatelessWidget {
   final PersonalModel data;
@@ -28,7 +29,9 @@ class ListPersonalData extends StatelessWidget {
               label: 'Birth Date',
               value: this.data == null
                   ? 'Processing...'
-                  : this.data.birthdate ?? 'Not set',
+                  : DateFormat.yMMMMd().format(DateFormat('yyyy-MM-dd')
+                          .parse(this.data.birthdate)) ??
+                      'Not set',
             ),
             ListViewCardContent(
               label: 'Birth Place',
@@ -80,7 +83,9 @@ class ListPersonalData extends StatelessWidget {
               label: 'Expiration Date',
               value: this.data == null
                   ? 'Processing...'
-                  : this.data.idExpiryDate ?? 'Not set',
+                  : DateFormat.yMMMMd().format(DateFormat('yyyy-MM-dd')
+                          .parse(this.data.idExpiryDate)) ??
+                      'Not set',
             ),
             ListViewCardContent(
               label: 'Address',
