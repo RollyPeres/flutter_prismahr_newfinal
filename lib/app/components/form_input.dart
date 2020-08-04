@@ -6,6 +6,7 @@ class FormInput extends StatelessWidget {
   final bool obscureText;
   final FocusNode focusNode;
   final IconButton suffixIcon;
+  final String initialValue;
   final String label;
   final String errorText;
   final String hintText;
@@ -21,6 +22,7 @@ class FormInput extends StatelessWidget {
     this.readOnly,
     this.autofocus,
     this.focusNode,
+    this.initialValue,
     this.label,
     this.hintText,
     this.obscureText,
@@ -47,6 +49,7 @@ class FormInput extends StatelessWidget {
                   child: Text('${this.label}'))
               : SizedBox(),
           TextFormField(
+            initialValue: this.initialValue,
             readOnly: this.readOnly ?? false,
             autofocus: this.autofocus ?? false,
             controller: this.controller,
@@ -64,12 +67,11 @@ class FormInput extends StatelessWidget {
               filled: true,
               hintText: this.hintText,
               suffixIcon: this.suffixIcon,
-              fillColor: Theme.of(context).cardColor,
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10),
                 borderSide: BorderSide(
                   color: Theme.of(context).primaryColor,
-                  width: 3,
+                  width: 1,
                 ),
               ),
             ),

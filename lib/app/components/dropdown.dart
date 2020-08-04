@@ -37,7 +37,7 @@ class Dropdown extends StatelessWidget {
             decoration: InputDecoration(
               contentPadding: const EdgeInsets.symmetric(
                 horizontal: 20,
-                vertical: 15,
+                vertical: 13,
               ),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10),
@@ -45,7 +45,6 @@ class Dropdown extends StatelessWidget {
               ),
               errorText: this.errorText,
               filled: true,
-              fillColor: Theme.of(context).cardColor,
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10),
                 borderSide: BorderSide(

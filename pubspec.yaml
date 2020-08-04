@@ -40,6 +40,8 @@ dependencies:
   flutter_rounded_date_picker: ^1.0.4 # there is a height issue with this ver.
   # flutter_rounded_date_picker: ^0.3.0 # this version is fine but the option is limited
   intl: ^0.16.1
+  lottie: ^0.5.1
+  dropdown_search: ^0.4.4
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -66,6 +68,7 @@ flutter:
     - .env
     - assets/icons/
     - assets/images/
+    - assets/lottie/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
