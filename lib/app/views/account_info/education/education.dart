@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_prismahr/app/bloc/account_info/education/education_bloc.dart';
 import 'package:flutter_prismahr/app/components/empty.dart';
+import 'package:flutter_prismahr/app/data/models/account_info/education_model.dart';
 import 'package:flutter_prismahr/app/data/providers/account_info/education_provider.dart';
 import 'package:flutter_prismahr/app/data/repositories/account_info/education_repository.dart';
 import 'package:flutter_prismahr/app/routes/routes.dart';
@@ -17,10 +18,13 @@ class EducationScreen extends StatefulWidget {
 
 class _EducationScreenState extends State<EducationScreen> {
   EducationBloc _educationBloc;
+  List<EducationModel> _educations;
 
   @override
   void initState() {
     super.initState();
+    _educations = List<EducationModel>();
+
     _educationBloc = EducationBloc(
         repository: EducationRepository(
             provider: EducationProvider(httpClient: Request.dio)));
@@ -39,42 +43,68 @@ class _EducationScreenState extends State<EducationScreen> {
           SliverToBoxAdapter(
             child: BlocProvider(
               create: (context) => _educationBloc,
-              child: BlocBuilder<EducationBloc, EducationState>(
-                builder: (context, state) {
+              child: BlocListener<EducationBloc, EducationState>(
+                listener: (context, state) {
                   if (state is EducationLoaded) {
-                    return ListEducationData(educations: state.data);
+                    setState(() {
+                      _educations = state.data;
+                    });
                   }
 
-                  if (state is EducationEmpty) {
-                    return Padding(
-                      padding: const EdgeInsets.only(top: 100),
-                      child: Empty(),
-                    );
+                  if (state is EducationCreated) {
+                    setState(() {
+                      _educations.insert(0, state.education);
+                    });
                   }
-
-                  return Padding(
-                    padding: const EdgeInsets.only(top: 100),
-                    child: Empty(
-                      title: 'Requesting Data',
-                      subtitle: 'We\'re processing your data, please wait...',
-                    ),
-                  );
                 },
+                child: BlocBuilder<EducationBloc, EducationState>(
+                  builder: (context, state) {
+                    if (state is EducationLoading) {
+                      return Padding(
+                        padding: const EdgeInsets.only(top: 100),
+                        child: Empty(
+                          title: 'Requesting Data',
+                          subtitle:
+                              'We\'re processing your data, please wait...',
+                        ),
+                      );
+                    }
+
+                    if (state is EducationEmpty) {
+                      return Padding(
+                        padding: const EdgeInsets.only(top: 100),
+                        child: Empty(),
+                      );
+                    }
+
+                    return ListEducationData(educations: _educations);
+                  },
+                ),
               ),
             ),
           ),
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        onPressed: () async {
-          final data =
-              await Navigator.of(context).pushNamed(Routes.EDUCATION_INFO_ADD);
+      floatingActionButton: BlocProvider(
+        create: (context) => _educationBloc,
+        child: BlocBuilder<EducationBloc, EducationState>(
+          builder: (context, state) {
+            if (state is EducationLoaded) {
+              return FloatingActionButton(
+                child: Icon(Icons.add),
+                onPressed: () async {
+                  final data = await Navigator.of(context)
+                      .pushNamed(Routes.EDUCATION_INFO_ADD);
 
-          if (data != null) {
-            _educationBloc.add(EducationScreenInitialized());
-          }
-        },
+                  if (data != null) {
+                    _educationBloc.add(EducationAdded(data: data));
+                  }
+                },
+              );
+            }
+            return SizedBox();
+          },
+        ),
       ),
     );
   }
