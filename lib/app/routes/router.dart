@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_prismahr/app/routes/routes.dart';
 import 'package:flutter_prismahr/app/views/account_info.dart';
+import 'package:flutter_prismahr/app/views/account_info/education/education.dart';
+import 'package:flutter_prismahr/app/views/account_info/education/education_add.dart';
 import 'package:flutter_prismahr/app/views/account_info/personal/personal.dart';
 import 'package:flutter_prismahr/app/views/account_info/personal/personal_edit.dart';
 import 'package:flutter_prismahr/app/views/home.dart';
@@ -20,6 +22,12 @@ class Router {
       case Routes.ACCOUNT_INFO_PERSONAL_EDIT:
         return MaterialPageRoute(
             builder: (_) => PersonalEditScreen(data: settings.arguments));
+
+      case Routes.EDUCATION_INFO:
+        return MaterialPageRoute(builder: (_) => EducationScreen());
+
+      case Routes.EDUCATION_INFO_ADD:
+        return MaterialPageRoute(builder: (_) => EducationAddScreen());
 
       default:
         return MaterialPageRoute(

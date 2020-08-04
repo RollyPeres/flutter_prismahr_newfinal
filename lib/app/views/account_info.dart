@@ -59,7 +59,7 @@ class AccountInfoScreen extends StatelessWidget {
                   icon: 'assets/icons/icon-book-reader.svg',
                   label: 'Educations',
                   onTap: () {
-                    // Get.toNamed(Routes.EDUCATION_INFO);
+                    Navigator.of(context).pushNamed(Routes.EDUCATION_INFO);
                   },
                 ),
                 ProfileMenu(
