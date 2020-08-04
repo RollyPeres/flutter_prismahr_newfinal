@@ -1,4 +1,3 @@
-import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,7 +11,6 @@ import 'package:flutter_prismahr/app/data/models/country_model.dart';
 import 'package:flutter_prismahr/app/data/models/field_of_study_model.dart';
 import 'package:flutter_prismahr/app/data/providers/account_info/education_provider.dart';
 import 'package:flutter_prismahr/app/data/repositories/account_info/education_repository.dart';
-import 'package:flutter_prismahr/app/data/repositories/country_repository.dart';
 import 'package:flutter_prismahr/utils/request.dart';
 
 class EducationAddScreen extends StatefulWidget {
