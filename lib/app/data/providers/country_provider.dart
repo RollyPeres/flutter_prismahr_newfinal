@@ -6,10 +6,15 @@ class CountryProvider {
   final Dio httpClient = Request.dio;
 
   Future<List<Country>> find(String name) async {
-    final Response response =
-        await httpClient.get('countries', queryParameters: {'name': name});
-    final List countries = response.data['data'] as List;
+    try {
+      final Response response =
+          await httpClient.get('countries', queryParameters: {'name': name});
+      final List countries = response.data['data'] as List;
 
-    return countries.map((c) => Country.fromJson(c)).toList();
+      return countries.map((c) => Country.fromJson(c)).toList();
+    } catch (e) {
+      print(e);
+      return null;
+    }
   }
 }

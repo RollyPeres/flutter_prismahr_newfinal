@@ -6,7 +6,7 @@ class ListViewGroup extends StatelessWidget {
 
   const ListViewGroup({
     Key key,
-    @required this.title,
+    this.title,
     @required this.items,
   }) : super(key: key);
 
@@ -17,10 +17,12 @@ class ListViewGroup extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.only(bottom: 10),
-            child: this.title,
-          ),
+          this.title == null
+              ? SizedBox()
+              : Padding(
+                  padding: const EdgeInsets.only(bottom: 10),
+                  child: this.title,
+                ),
           ListView.builder(
             physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,

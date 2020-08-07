@@ -68,7 +68,7 @@ class AccountInfoScreen extends StatelessWidget {
                   iconHeight: 15.75,
                   label: 'Working Experiences',
                   onTap: () {
-                    // Get.toNamed(Routes.EXPERIENCE_INFO);
+                    Navigator.of(context).pushNamed(Routes.EXPERIENCE_INFO);
                   },
                 ),
                 ProfileMenu(

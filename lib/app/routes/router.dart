@@ -3,6 +3,8 @@ import 'package:flutter_prismahr/app/routes/routes.dart';
 import 'package:flutter_prismahr/app/views/account_info.dart';
 import 'package:flutter_prismahr/app/views/account_info/education/education.dart';
 import 'package:flutter_prismahr/app/views/account_info/education/education_add.dart';
+import 'package:flutter_prismahr/app/views/account_info/experiences/experience.dart';
+import 'package:flutter_prismahr/app/views/account_info/experiences/experience_add.dart';
 import 'package:flutter_prismahr/app/views/account_info/personal/personal.dart';
 import 'package:flutter_prismahr/app/views/account_info/personal/personal_edit.dart';
 import 'package:flutter_prismahr/app/views/home.dart';
@@ -28,6 +30,12 @@ class Router {
 
       case Routes.EDUCATION_INFO_ADD:
         return MaterialPageRoute(builder: (_) => EducationAddScreen());
+
+      case Routes.EXPERIENCE_INFO:
+        return MaterialPageRoute(builder: (_) => ExperienceScreen());
+
+      case Routes.EXPERIENCE_INFO_ADD:
+        return MaterialPageRoute(builder: (_) => ExperienceAddScreen());
 
       default:
         return MaterialPageRoute(
