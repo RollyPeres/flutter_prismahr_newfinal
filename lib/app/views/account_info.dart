@@ -51,7 +51,7 @@ class AccountInfoScreen extends StatelessWidget {
                   icon: 'assets/icons/icon-contacts.svg',
                   label: 'Contacts',
                   onTap: () {
-                    // TODO: Add navigator for contacts
+                    Navigator.of(context).pushNamed(Routes.CONTACT_INFO);
                   },
                 ),
                 ProfileMenu(

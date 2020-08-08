@@ -26,7 +26,7 @@ class ExperienceProvider {
 
       if (response.statusCode == 422) {
         return ExperienceFormValidationException.fromJson(
-          response.data['data'],
+          response.data['errors'],
         );
       }
 

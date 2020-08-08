@@ -7,4 +7,6 @@ class Routes {
   static const EDUCATION_INFO_ADD = 'account_info/educations/add';
   static const EXPERIENCE_INFO = 'account_info/experiences';
   static const EXPERIENCE_INFO_ADD = 'account_info/experiences/add';
+  static const CONTACT_INFO = 'account_info/contacts';
+  static const CONTACT_INFO_ADD = 'account_info/contacts/add';
 }
