@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_prismahr/app/routes/route_arguments.dart';
 import 'package:flutter_prismahr/app/routes/routes.dart';
 import 'package:flutter_prismahr/app/views/account_info.dart';
 import 'package:flutter_prismahr/app/views/account_info/contacts/contact.dart';
@@ -9,10 +10,19 @@ import 'package:flutter_prismahr/app/views/account_info/experiences/experience.d
 import 'package:flutter_prismahr/app/views/account_info/experiences/experience_add.dart';
 import 'package:flutter_prismahr/app/views/account_info/personal/personal.dart';
 import 'package:flutter_prismahr/app/views/account_info/personal/personal_edit.dart';
+import 'package:flutter_prismahr/app/views/field_report/create.dart';
+import 'package:flutter_prismahr/app/views/field_report/show.dart';
+import 'package:flutter_prismahr/app/views/field_report/update.dart';
 import 'package:flutter_prismahr/app/views/home.dart';
+import 'package:flutter_prismahr/app/views/field_report.dart';
 
 class Router {
+  // Provide a function to handle named routes. Use this function to
+  // identify the named route being pushed, and create the correct
+  // screen.
   static Route<dynamic> generateRoute(RouteSettings settings) {
+    RouteArguments args = settings.arguments;
+
     switch (settings.name) {
       case Routes.HOME:
         return MaterialPageRoute(builder: (_) => HomePage());
@@ -44,6 +54,23 @@ class Router {
 
       case Routes.CONTACT_INFO_ADD:
         return MaterialPageRoute(builder: (_) => ContactAddScreen());
+
+      case Routes.FIELD_REPORT:
+        return MaterialPageRoute(builder: (_) => FieldReportScreen());
+
+      case Routes.FIELD_REPORT_SHOW:
+        return MaterialPageRoute(
+          builder: (_) => FieldReportShowScreen(
+            fieldReport: args.model,
+            fieldReportBloc: args.bloc,
+          ),
+        );
+
+      case Routes.FIELD_REPORT_CREATE:
+        return MaterialPageRoute(builder: (_) => FieldReportCreateScreen());
+
+      case Routes.FIELD_REPORT_UPDATE:
+        return MaterialPageRoute(builder: (_) => FieldReportUpdateScreen());
 
       default:
         return MaterialPageRoute(

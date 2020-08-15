@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter_prismahr/app/data/models/user_model.dart';
 import 'package:flutter_prismahr/app/data/providers/auth_provider.dart';
 import 'package:flutter_prismahr/utils/preferences.dart';
 import 'package:meta/meta.dart';
@@ -19,6 +20,10 @@ class AuthRepository {
     data['password'] = password;
     data['user_agent'] = userAgent;
     return provider.authenticate(data: data);
+  }
+
+  Future<User> fetchProfile() {
+    return provider.fetchProfile();
   }
 
   Future<bool> deleteToken() async {

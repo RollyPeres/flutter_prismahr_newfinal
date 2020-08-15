@@ -5,12 +5,14 @@ class RoundedRectangleAvatar extends StatelessWidget {
   final String url;
   final double height;
   final double width;
+  final BorderRadiusGeometry borderRadius;
 
   const RoundedRectangleAvatar({
     Key key,
     this.url,
     this.height,
     this.width,
+    this.borderRadius,
   }) : super(key: key);
 
   @override
@@ -33,14 +35,14 @@ class RoundedRectangleAvatar extends StatelessWidget {
           image: provider,
           fit: BoxFit.cover,
         ),
-        boxShadow: [
-          BoxShadow(
-            offset: Offset(0.00, 3.00),
-            color: Color(0xff000000).withOpacity(0.16),
-            blurRadius: 6,
-          ),
-        ],
-        borderRadius: BorderRadius.circular(10.00),
+        // boxShadow: [
+        //   BoxShadow(
+        //     offset: Offset(0.00, 3.00),
+        //     color: Color(0xff000000).withOpacity(0.16),
+        //     blurRadius: 6,
+        //   ),
+        // ],
+        borderRadius: this.borderRadius ?? BorderRadius.circular(10.00),
       ),
     );
   }

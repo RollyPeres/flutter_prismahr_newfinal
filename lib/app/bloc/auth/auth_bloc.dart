@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter_prismahr/app/data/models/user_model.dart';
 import 'package:flutter_prismahr/app/data/repositories/auth_repository.dart';
 import 'package:meta/meta.dart';
 import 'package:bloc/bloc.dart';
@@ -17,9 +18,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     AuthEvent event,
   ) async* {
     if (event is AppStarted) {
+      // await repository.deleteToken();
       final bool hasToken = await repository.hasToken();
+      final User user = await repository.fetchProfile();
       if (hasToken) {
-        yield AuthAuthenticated();
+        yield AuthAuthenticated(user: user);
       } else {
         yield AuthUnauthenticated();
       }
@@ -28,7 +31,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     if (event is LoggedIn) {
       yield AuthLoading();
       final bool tokenStored = await repository.storeToken(event.token);
-      if (tokenStored) yield AuthAuthenticated();
+      final User user = await repository.fetchProfile();
+      if (tokenStored) yield AuthAuthenticated(user: user);
     }
 
     if (event is LoggedOut) {

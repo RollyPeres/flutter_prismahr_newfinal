@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_prismahr/app/bloc/auth/auth_bloc.dart';
 import 'package:flutter_prismahr/app/components/listview_group.dart';
 import 'package:flutter_prismahr/app/components/listview_group_title.dart';
 import 'package:flutter_prismahr/app/routes/routes.dart';
@@ -18,10 +20,18 @@ class AccountInfoScreen extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 20),
         child: Column(
           children: <Widget>[
-            ProfileHeader(
-              username: 'Donny Pratama',
-              role: 'Co-Founder',
-              company: 'PT. Prisma Tech Indonesia',
+            BlocBuilder<AuthBloc, AuthState>(
+              builder: (context, state) {
+                if (state is AuthAuthenticated) {
+                  return ProfileHeader(
+                    avatarUrl: state.user.avatar,
+                    username: state.user.name,
+                    role: 'Co-Founder',
+                    company: 'PT. Prisma Tech Indonesia',
+                  );
+                }
+                return Container();
+              },
             ),
             Hero(
               tag: 'account-completion',

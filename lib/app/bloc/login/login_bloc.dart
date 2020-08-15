@@ -32,7 +32,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
           userAgent: event.userAgent,
         );
 
-        authBloc.add(LoggedIn(token: token));
+        final user = await repository.fetchProfile();
+        authBloc.add(LoggedIn(token: token, user: user));
         yield LoginInitial();
       } catch (e) {
         yield LoginFailure(error: e.toString());

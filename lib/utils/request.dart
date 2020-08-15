@@ -1,7 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_prismahr/utils/interceptors/attach_token_interceptor.dart';
-import 'package:flutter_prismahr/utils/interceptors/logging_interceptor.dart';
+
+// import 'interceptors/logging_interceptor.dart';
 
 class Request {
   static Dio get dio => _dio();
@@ -28,7 +29,7 @@ class Request {
 
     // Add interceptors.
     dio.interceptors.add(AttachTokenInterceptor());
-    dio.interceptors.add(LoggingInterceptor());
+    // dio.interceptors.add(LoggingInterceptor());
 
     return dio;
   }

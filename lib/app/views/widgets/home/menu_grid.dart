@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_prismahr/app/routes/routes.dart';
 import 'package:flutter_prismahr/app/views/widgets/home/menu.dart';
 
 class MenuGrid extends StatelessWidget {
@@ -21,7 +22,9 @@ class MenuGrid extends StatelessWidget {
             asset: 'assets/icons/icon-exclamation-circle.svg',
             text: 'Field Report',
             iconColor: Colors.white,
-            onTap: () {},
+            onTap: () {
+              Navigator.of(context).pushNamed(Routes.FIELD_REPORT);
+            },
           ),
           Menu(
             asset: 'assets/icons/icon-calendar-check.svg',

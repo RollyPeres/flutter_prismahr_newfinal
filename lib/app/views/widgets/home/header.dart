@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_prismahr/app/bloc/auth/auth_bloc.dart';
 import 'package:flutter_prismahr/app/components/badge.dart';
 import 'package:flutter_prismahr/app/components/rounded_rectangle_avatar.dart';
 import 'package:flutter_prismahr/app/routes/routes.dart';
@@ -44,7 +46,14 @@ class Header extends StatelessWidget {
             ],
           ),
           GestureDetector(
-            child: RoundedRectangleAvatar(),
+            child: BlocBuilder<AuthBloc, AuthState>(
+              builder: (context, state) {
+                if (state is AuthAuthenticated) {
+                  return RoundedRectangleAvatar(url: state.user.avatar);
+                }
+                return RoundedRectangleAvatar();
+              },
+            ),
             onTap: () {
               Navigator.of(context).pushNamed(Routes.ACCOUNT_INFO);
             },

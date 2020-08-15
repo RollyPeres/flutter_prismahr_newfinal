@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_prismahr/app/data/models/user_model.dart';
 import 'package:meta/meta.dart';
 
 class AuthProvider {
@@ -25,6 +26,16 @@ class AuthProvider {
     } catch (e) {
       // FIXME: handle error
       throw Exception(e.toString());
+    }
+  }
+
+  Future<User> fetchProfile() async {
+    try {
+      final Response response = await httpClient.get('auth/user');
+      return User.fromJson(response.data['data']);
+    } catch (e) {
+      print(e);
+      return null;
     }
   }
 }
