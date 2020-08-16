@@ -5,7 +5,8 @@ class FormInput extends StatelessWidget {
   final bool autofocus;
   final bool obscureText;
   final FocusNode focusNode;
-  final IconButton suffixIcon;
+  final Widget suffixIcon;
+  final Widget prefixIcon;
   final String initialValue;
   final String label;
   final String errorText;
@@ -15,22 +16,25 @@ class FormInput extends StatelessWidget {
   final Function onChanged;
   final Function onFieldSubmitted;
   final int maxLines;
+  final int minLines;
   final TextEditingController controller;
 
   const FormInput({
     Key key,
-    this.readOnly,
-    this.autofocus,
+    this.readOnly = false,
+    this.autofocus = false,
     this.focusNode,
     this.initialValue,
     this.label,
     this.hintText,
-    this.obscureText,
+    this.obscureText = false,
     this.errorText,
     this.suffixIcon,
-    this.keyboardType,
-    this.textInputAction,
+    this.prefixIcon,
+    this.keyboardType = TextInputType.text,
+    this.textInputAction = TextInputAction.done,
     this.maxLines,
+    this.minLines,
     this.onChanged,
     this.onFieldSubmitted,
     this.controller,
@@ -50,8 +54,8 @@ class FormInput extends StatelessWidget {
               : SizedBox(),
           TextFormField(
             initialValue: this.initialValue,
-            readOnly: this.readOnly ?? false,
-            autofocus: this.autofocus ?? false,
+            readOnly: this.readOnly,
+            autofocus: this.autofocus,
             controller: this.controller,
             focusNode: this.focusNode,
             decoration: InputDecoration(
@@ -65,8 +69,10 @@ class FormInput extends StatelessWidget {
               ),
               errorText: this.errorText,
               filled: true,
+              fillColor: Theme.of(context).cardColor,
               hintText: this.hintText,
               suffixIcon: this.suffixIcon,
+              prefixIcon: this.prefixIcon,
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10),
                 borderSide: BorderSide(
@@ -75,11 +81,14 @@ class FormInput extends StatelessWidget {
                 ),
               ),
             ),
-            keyboardType: this.keyboardType ?? TextInputType.text,
-            obscureText: this.obscureText ?? false,
+            keyboardType: this.keyboardType,
+            obscureText: this.obscureText,
             onChanged: this.onChanged,
-            textInputAction: this.textInputAction ?? TextInputAction.done,
-            maxLines: this.maxLines ?? 1,
+            textInputAction: this.textInputAction,
+            minLines: this.minLines,
+            maxLines: this.obscureText != null && this.obscureText
+                ? 1
+                : this.maxLines,
             onFieldSubmitted: this.onFieldSubmitted,
           ),
         ],
