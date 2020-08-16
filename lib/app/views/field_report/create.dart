@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_prismahr/app/bloc/field_report_create/field_report_create_bloc.dart';
 import 'package:flutter_prismahr/app/bloc/theme/theme_bloc.dart';
 import 'package:flutter_prismahr/app/components/form_input.dart';
+import 'package:flutter_prismahr/app/components/multi_image_picker_component.dart';
 import 'package:flutter_prismahr/app/components/rounded_rectangle_avatar.dart';
 import 'package:flutter_prismahr/app/data/models/field_report_form_validation_exception_model.dart';
 import 'package:flutter_prismahr/app/data/models/user_model.dart';
@@ -32,7 +33,6 @@ class _FieldReportCreateScreenState extends State<FieldReportCreateScreen> {
   final FocusNode _participantFocusNode = FocusNode();
   final FocusNode _chronologyFocusNode = FocusNode();
 
-  final int _maxImages = 6;
   final int _maxChips = 6;
 
   FieldReportCreateBloc _fieldReportCreateBloc;
@@ -58,36 +58,32 @@ class _FieldReportCreateScreenState extends State<FieldReportCreateScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).cardColor,
-      body: CustomScrollView(
-        slivers: <Widget>[
-          SliverAppBar(
-            backgroundColor: Theme.of(context).cardColor,
-            title: Text(
-              'Add Field Report',
-              style: Theme.of(context)
-                  .textTheme
-                  .headline6
-                  .copyWith(fontWeight: FontWeight.w900),
-            ),
-          ),
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
-              child: Form(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    _buildImageGridView(),
-                    _buildTitleInput(),
-                    _buildParticipantInput(),
-                    _buildChronologyInput(),
-                  ],
+      body: GestureDetector(
+        onTap: () => FocusScope.of(context).unfocus(),
+        child: CustomScrollView(
+          slivers: <Widget>[
+            SliverAppBar(title: Text('Add Field Report')),
+            SliverToBoxAdapter(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 30,
+                ),
+                child: Form(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _buildImageGridView(),
+                      _buildTitleInput(),
+                      _buildParticipantInput(),
+                      _buildChronologyInput(),
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
       floatingActionButton: BlocProvider(
         create: (context) => _fieldReportCreateBloc,
@@ -306,154 +302,13 @@ class _FieldReportCreateScreenState extends State<FieldReportCreateScreen> {
   }
 
   Widget _buildImageGridView() {
-    if (_images != null && _images.length > 0) {
-      return Container(
-        padding: const EdgeInsets.only(bottom: 20.0),
-        child: Stack(
-          children: <Widget>[
-            ClipRRect(
-              borderRadius: BorderRadius.circular(10.00),
-              child: GridView.count(
-                padding: EdgeInsets.zero,
-                crossAxisCount: 3,
-                physics: const NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                primary: false,
-                children: List.generate(_images.length, (index) {
-                  Asset asset = _images[index];
-                  return Material(
-                    color: Colors.transparent,
-                    child: InkWell(
-                      child: AssetThumb(
-                        asset: asset,
-                        width: 300,
-                        height: 300,
-                      ),
-                      onTap: () async {
-                        showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return Dialog(
-                              child: InkWell(
-                                child: Container(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 15.00,
-                                    vertical: 20.00,
-                                  ),
-                                  child: Text('Remove this image'),
-                                ),
-                                onTap: () {
-                                  Navigator.pop(context);
-                                  setState(() {
-                                    _images.remove(_images[index]);
-                                  });
-                                },
-                              ),
-                            );
-                          },
-                        );
-                      },
-                    ),
-                  );
-                }),
-              ),
-            ),
-            Positioned(
-              top: 5.00,
-              right: 10.00,
-              child: Container(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 8.00, vertical: 4.00),
-                decoration: BoxDecoration(
-                  color: Colors.black54,
-                  borderRadius: BorderRadius.circular(10.00),
-                ),
-                child: Center(
-                  child: Text(
-                    '${_images.length}/$_maxImages',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                ),
-              ),
-            ),
-            Positioned(
-              bottom: 5.00,
-              right: 10.00,
-              child: _images.length < _maxImages
-                  ? RaisedButton(
-                      color: Colors.black54,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.00)),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.max,
-                        children: <Widget>[
-                          Padding(
-                            padding: const EdgeInsets.only(right: 5.00),
-                            child: Icon(
-                              Icons.add_a_photo,
-                              size: 16,
-                              color: Colors.white,
-                            ),
-                          ),
-                          Text(
-                            'Add more images',
-                            style: TextStyle(color: Colors.white),
-                          )
-                        ],
-                      ),
-                      onPressed: loadAssets,
-                    )
-                  : Container(),
-            ),
-          ],
-        ),
-      );
-    }
-    return _buildFullWidthImagePicker();
-  }
-
-  Widget _buildFullWidthImagePicker() {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 20.0),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(10.00),
-        child: Material(
-          color: Theme.of(context).inputDecorationTheme.fillColor,
-          child: InkWell(
-            child: Container(
-              padding: const EdgeInsets.symmetric(
-                vertical: 50.00,
-                horizontal: 20.00,
-              ),
-              child: Center(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.max,
-                  children: <Widget>[
-                    Container(
-                      margin: const EdgeInsets.only(bottom: 5.00),
-                      child: Icon(
-                        Icons.add_a_photo,
-                        color: Theme.of(context).primaryColor,
-                      ),
-                    ),
-                    Text(
-                      'Add Images',
-                      style: TextStyle(
-                        color: Theme.of(context).primaryColor,
-                      ),
-                    )
-                  ],
-                ),
-              ),
-            ),
-            onTap: loadAssets,
-          ),
-        ),
-      ),
+    return MultiImagePickerComponent(
+      subject: 'Image',
+      onImageChanged: (List<Asset> images) {
+        setState(() {
+          _images = images;
+        });
+      },
     );
   }
 
@@ -468,34 +323,6 @@ class _FieldReportCreateScreenState extends State<FieldReportCreateScreen> {
     setState(() {
       _users = users;
     });
-  }
-
-  Future<void> loadAssets() async {
-    List<Asset> resultList;
-
-    try {
-      resultList = await MultiImagePicker.pickImages(
-        // We need to calculate the limit of image picker based on the maximum
-        // images subtracted by the total of current selected images.
-        maxImages: _maxImages - _images.length,
-        enableCamera: true,
-      );
-    } on Exception catch (e) {
-      debugPrint(e.toString());
-    }
-
-    // If the widget was removed from the tree while the asynchronous platform
-    // message was in flight, we want to discard the reply rather than calling
-    // setState to update our non-existent appearance.
-    if (!mounted) return;
-
-    // If there is any selected _images, add the images with the current
-    // selected images.
-    if (resultList != null) {
-      setState(() {
-        _images = [..._images, ...resultList];
-      });
-    }
   }
 
   void _submit() async {
