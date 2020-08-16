@@ -8,7 +8,7 @@ class BottomNavbar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BottomAppBar(
-      // color: Theme.of(context).cardColor,
+      color: Theme.of(context).cardColor,
       child: Container(
         height: 55,
         color: Theme.of(context).cardColor,

@@ -34,7 +34,9 @@ class MenuGrid extends StatelessWidget {
           Menu(
             asset: 'assets/icons/icon-walking.svg',
             text: 'Leave',
-            onTap: () {},
+            onTap: () {
+              Navigator.of(context).pushNamed(Routes.LEAVE);
+            },
           ),
           Menu(
             asset: 'assets/icons/icon-hospital.svg',
