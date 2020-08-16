@@ -15,6 +15,8 @@ import 'package:flutter_prismahr/app/views/field_report/show.dart';
 import 'package:flutter_prismahr/app/views/field_report/update.dart';
 import 'package:flutter_prismahr/app/views/home.dart';
 import 'package:flutter_prismahr/app/views/field_report.dart';
+import 'package:flutter_prismahr/app/views/sickleave.dart';
+import 'package:flutter_prismahr/app/views/sickleave/create.dart';
 
 class Router {
   // Provide a function to handle named routes. Use this function to
@@ -71,6 +73,12 @@ class Router {
 
       case Routes.FIELD_REPORT_UPDATE:
         return MaterialPageRoute(builder: (_) => FieldReportUpdateScreen());
+
+      case Routes.SICKLEAVE:
+        return MaterialPageRoute(builder: (_) => SickleaveScreen());
+
+      case Routes.SICKLEAVE_CREATE:
+        return MaterialPageRoute(builder: (_) => SickleaveCreateScreen());
 
       default:
         return MaterialPageRoute(

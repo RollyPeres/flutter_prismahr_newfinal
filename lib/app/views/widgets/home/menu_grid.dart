@@ -39,7 +39,9 @@ class MenuGrid extends StatelessWidget {
           Menu(
             asset: 'assets/icons/icon-hospital.svg',
             text: 'Sick Leave',
-            onTap: () {},
+            onTap: () {
+              Navigator.of(context).pushNamed(Routes.SICKLEAVE);
+            },
           ),
           Menu(
             asset: 'assets/icons/icon-branch.svg',

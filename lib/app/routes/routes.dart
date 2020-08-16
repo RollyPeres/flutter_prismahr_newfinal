@@ -13,4 +13,6 @@ class Routes {
   static const FIELD_REPORT_SHOW = 'fieldReport/show';
   static const FIELD_REPORT_CREATE = 'fieldReport/create';
   static const FIELD_REPORT_UPDATE = 'fieldReport/update';
+  static const SICKLEAVE = 'sickLeaves';
+  static const SICKLEAVE_CREATE = 'sickLeaves/create';
 }
