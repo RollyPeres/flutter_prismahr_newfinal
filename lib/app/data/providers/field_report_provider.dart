@@ -27,7 +27,6 @@ class FieldReportProvider {
       );
 
       if (response.statusCode == 422) {
-        print('422');
         return FieldReportFormValidationException.fromJson(
           response.data['errors'],
         );
