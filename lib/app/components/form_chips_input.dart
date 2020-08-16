@@ -117,6 +117,7 @@ class FormChipsInputState<T> extends State<FormChipsInput<T>> {
               vertical: 15.0,
             ),
             filled: true,
+            fillColor: Theme.of(context).cardColor,
             hintText: widget.hintText,
             helperText: widget.helperText,
             prefixIcon: widget.prefixIcon,
@@ -127,15 +128,7 @@ class FormChipsInputState<T> extends State<FormChipsInput<T>> {
           ),
         ),
         onSuggestionSelected: _onSuggestionSelected,
-        suggestionsCallback: widget
-            .onSearchChanged /*
-        {
-          // final suggestions = await widget.onSearchChanged(pattern);
-          // suggestions
-          //     .where((suggestion) => !_chips.contains(suggestion))
-          //     .toList(growable: false);
-        } */
-        ,
+        suggestionsCallback: widget.onSearchChanged,
         suggestionsBoxDecoration: SuggestionsBoxDecoration(
           elevation: 4.0,
           constraints: BoxConstraints(maxHeight: 300),
