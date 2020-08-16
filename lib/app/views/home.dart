@@ -18,9 +18,9 @@ class HomePage extends StatelessWidget {
             Header(),
             WeekCounter(month: 'August', ordinal: '1st'),
             PerformanceChart(),
-            MenuGrid(),
             Container(
               height: 130,
+              margin: const EdgeInsets.only(bottom: 20.0),
               child: PageView(
                 controller: PageController(viewportFraction: 0.9),
                 scrollDirection: Axis.horizontal,
@@ -51,7 +51,8 @@ class HomePage extends StatelessWidget {
                           'stop office...'),
                 ],
               ),
-            )
+            ),
+            MenuGrid(),
           ],
         ),
       ),
