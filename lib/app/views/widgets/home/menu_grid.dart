@@ -60,7 +60,9 @@ class MenuGrid extends StatelessWidget {
             text: 'Reimburse',
             iconHeight: 14,
             iconWidth: 20,
-            onTap: () {},
+            onTap: () {
+              Navigator.of(context).pushNamed(Routes.REIMBURSE);
+            },
           ),
           Menu(
             asset: 'assets/icons/icon-money-check-alt.svg',

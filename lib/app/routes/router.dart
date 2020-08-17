@@ -17,6 +17,8 @@ import 'package:flutter_prismahr/app/views/home.dart';
 import 'package:flutter_prismahr/app/views/field_report.dart';
 import 'package:flutter_prismahr/app/views/leave.dart';
 import 'package:flutter_prismahr/app/views/leave/create.dart';
+import 'package:flutter_prismahr/app/views/reimburse.dart';
+import 'package:flutter_prismahr/app/views/reimburse/create.dart';
 import 'package:flutter_prismahr/app/views/sickleave.dart';
 import 'package:flutter_prismahr/app/views/sickleave/create.dart';
 
@@ -87,6 +89,12 @@ class Router {
 
       case Routes.LEAVE_CREATE:
         return MaterialPageRoute(builder: (_) => LeaveCreateScreen());
+
+      case Routes.REIMBURSE:
+        return MaterialPageRoute(builder: (_) => ReimburseScreen());
+
+      case Routes.REIMBURSE_CREATE:
+        return MaterialPageRoute(builder: (_) => ReimburseCreateScreen());
 
       default:
         return MaterialPageRoute(

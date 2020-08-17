@@ -17,4 +17,6 @@ class Routes {
   static const SICKLEAVE_CREATE = 'sickLeaves/create';
   static const LEAVE = 'leaves';
   static const LEAVE_CREATE = 'leaves/create';
+  static const REIMBURSE = 'reimburses';
+  static const REIMBURSE_CREATE = 'reimburses/create';
 }
