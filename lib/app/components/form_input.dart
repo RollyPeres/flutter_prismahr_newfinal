@@ -17,6 +17,7 @@ class FormInput extends StatelessWidget {
   final Function onFieldSubmitted;
   final int maxLines;
   final int minLines;
+  final int maxLength;
   final TextEditingController controller;
 
   const FormInput({
@@ -35,6 +36,7 @@ class FormInput extends StatelessWidget {
     this.textInputAction = TextInputAction.done,
     this.maxLines,
     this.minLines,
+    this.maxLength,
     this.onChanged,
     this.onFieldSubmitted,
     this.controller,
@@ -89,6 +91,7 @@ class FormInput extends StatelessWidget {
             maxLines: this.obscureText != null && this.obscureText
                 ? 1
                 : this.maxLines,
+            maxLength: this.maxLength,
             onFieldSubmitted: this.onFieldSubmitted,
           ),
         ],
