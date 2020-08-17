@@ -103,6 +103,7 @@ class LeaveList extends StatelessWidget {
               .textTheme
               .bodyText1
               .copyWith(fontWeight: FontWeight.w900, fontSize: 16),
+          overflow: TextOverflow.ellipsis,
         ),
         subtitle: Text(
           'From $formattedFrom to $formattedTo',
