@@ -41,12 +41,17 @@ class Reimburse {
     this.id = json['id'];
     this.reason = json['reason'];
     this.date = json['date'];
-    this.nominal = int.parse(json['nominal']);
     this.details = json['details'];
     this.approvedAt = json['approved_at'];
     this.rejectedAt = json['rejected_at'];
     this.createdAt = json['created_at'];
     this.updatedAt = json['updated_at'];
+
+    if (json['nominal'] is String) {
+      this.nominal = int.parse(json['nominal']);
+    } else {
+      this.nominal = json['nominal'];
+    }
 
     if (json['receipts'] != null) {
       final List rawReceipts = jsonDecode(json['receipts']) as List;
