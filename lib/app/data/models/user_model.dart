@@ -13,11 +13,15 @@ class User {
     emailVerifiedAt,
   });
 
-  User.fromJson(Map<String, dynamic> json) {
-    this.id = json['id'];
-    this.avatar = json['avatar'];
-    this.name = json['name'];
-    this.email = json['email'];
-    this.emailVerifiedAt = json['email_verified_at'];
+  factory User.fromJson(Map<String, dynamic> json) {
+    if (json == null) return User();
+
+    return User(
+      id: json['id'],
+      avatar: json['avatar'],
+      name: json['name'],
+      email: json['email'],
+      emailVerifiedAt: json['email_verified_at'],
+    );
   }
 }

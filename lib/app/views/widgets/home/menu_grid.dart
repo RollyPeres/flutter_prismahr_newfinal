@@ -69,7 +69,9 @@ class MenuGrid extends StatelessWidget {
             text: 'Loan',
             iconHeight: 14,
             iconWidth: 20,
-            onTap: () {},
+            onTap: () {
+              Navigator.of(context).pushNamed(Routes.LOAN);
+            },
           ),
         ],
       ),

@@ -19,4 +19,6 @@ class Routes {
   static const LEAVE_CREATE = 'leaves/create';
   static const REIMBURSE = 'reimburses';
   static const REIMBURSE_CREATE = 'reimburses/create';
+  static const LOAN = 'loans';
+  static const LOAN_CREATE = 'loans/create';
 }

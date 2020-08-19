@@ -3,18 +3,19 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_prismahr/app/bloc/auth/auth_bloc.dart';
-import 'package:flutter_prismahr/app/bloc/theme/theme_bloc.dart';
 import 'package:flutter_prismahr/app/bloc/simple_bloc_observer.dart';
+import 'package:flutter_prismahr/app/bloc/theme/theme_bloc.dart';
 import 'package:flutter_prismahr/app/data/providers/auth_provider.dart';
 import 'package:flutter_prismahr/app/data/repositories/auth_repository.dart';
 import 'package:flutter_prismahr/app/routes/router.dart';
 import 'package:flutter_prismahr/app/routes/routes.dart';
-import 'package:flutter_prismahr/app/themes/themes.dart';
 import 'package:flutter_prismahr/app/views/home.dart';
 import 'package:flutter_prismahr/app/views/login.dart';
 import 'package:flutter_prismahr/app/views/splash.dart';
 import 'package:flutter_prismahr/utils/request.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
+
+import 'app/themes/themes.dart';
 
 void main() async {
   // https://github.com/flutter/flutter/pull/38464

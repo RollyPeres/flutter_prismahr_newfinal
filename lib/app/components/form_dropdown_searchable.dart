@@ -16,6 +16,9 @@ class FormDropdownSearchable<T> extends StatefulWidget {
     @required this.onFind,
     this.dropdownBuilder,
     this.popupItemBuilder,
+    this.itemAsString,
+    this.showSearchBox = true,
+    this.maxHeight,
   }) : super(key: key);
 
   final T selectedItem;
@@ -42,6 +45,12 @@ class FormDropdownSearchable<T> extends StatefulWidget {
 
   final Widget Function(BuildContext, T, bool) popupItemBuilder;
 
+  final String Function(T) itemAsString;
+
+  final bool showSearchBox;
+
+  final double maxHeight;
+
   @override
   _ForSearchablemDropdownState<T> createState() =>
       _ForSearchablemDropdownState();
@@ -58,8 +67,9 @@ class _ForSearchablemDropdownState<T> extends State<FormDropdownSearchable<T>> {
           _buildLabel(),
           DropdownSearch<T>(
             mode: widget.mode,
-            showSearchBox: true,
-            maxHeight: MediaQuery.of(context).size.height * 0.5,
+            showSearchBox: widget.showSearchBox,
+            maxHeight:
+                widget.maxHeight ?? MediaQuery.of(context).size.height * 0.5,
             popupBackgroundColor: Theme.of(context).cardColor,
             popupTitle: SizedBox(height: 10),
             searchBoxDecoration: InputDecoration(
@@ -107,6 +117,7 @@ class _ForSearchablemDropdownState<T> extends State<FormDropdownSearchable<T>> {
             onChanged: widget.onChanged,
             dropdownBuilder: widget.dropdownBuilder,
             popupItemBuilder: widget.popupItemBuilder,
+            itemAsString: widget.itemAsString,
           ),
         ],
       ),
