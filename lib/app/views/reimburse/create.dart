@@ -48,6 +48,12 @@ class _ReimburseCreateScreenState extends State<ReimburseCreateScreen> {
 
   @override
   void dispose() {
+    _reasonController.dispose();
+    _nominalController.dispose();
+    _detailsController.dispose();
+    _reasonFocus.dispose();
+    _nominalFocus.dispose();
+    _detailsFocus.dispose();
     _reimburseCreateBloc.close();
     super.dispose();
   }

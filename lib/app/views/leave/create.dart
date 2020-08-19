@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_prismahr/app/bloc/leave_create/leave_create_bloc.dart';
-import 'package:flutter_prismahr/app/components/form_input_range_calendar.dart';
 import 'package:flutter_prismahr/app/components/form_input.dart';
+import 'package:flutter_prismahr/app/components/form_input_range_calendar.dart';
 import 'package:flutter_prismahr/app/data/models/leave_model.dart';
 import 'package:intl/intl.dart';
 
@@ -33,6 +33,10 @@ class _LeaveCreateScreenState extends State<LeaveCreateScreen> {
 
   @override
   void dispose() {
+    _reasonController.dispose();
+    _detailsController.dispose();
+    _reasonFocus.dispose();
+    _detailsFocus.dispose();
     _leaveCreateBloc.close();
     super.dispose();
   }

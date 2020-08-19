@@ -56,6 +56,56 @@ class _FieldReportCreateScreenState extends State<FieldReportCreateScreen> {
   }
 
   @override
+  void dispose() {
+    _titleController.dispose();
+    _participantController.dispose();
+    _chronologyController.dispose();
+    _titleFocusNode.dispose();
+    _participantFocusNode.dispose();
+    _chronologyFocusNode.dispose();
+    _fieldReportCreateBloc.close();
+    super.dispose();
+  }
+
+  void _fetchUsers() async {
+    final users = await _repository.fetch();
+    setState(() {
+      _users = users;
+    });
+  }
+
+  void _submit() async {
+    final List<int> participants = _participants.map((p) => p.id).toList();
+
+    List<MultipartFile> images = <MultipartFile>[];
+    for (var image in _images) {
+      final ByteData byteData = await image.getByteData(quality: 50);
+      final List<int> imageData = byteData.buffer.asUint8List();
+      final MultipartFile file = MultipartFile.fromBytes(
+        imageData,
+        filename: image.name,
+        contentType: MediaType('image', 'png'),
+      );
+
+      images.add(file);
+    }
+
+    _unfocus();
+    _fieldReportCreateBloc.add(FieldReportCreateSubmitButtonPressed(
+      images: images,
+      title: _titleController.text,
+      chronology: _chronologyController.text,
+      participants: participants,
+    ));
+  }
+
+  void _unfocus() {
+    _titleFocusNode.unfocus();
+    _participantFocusNode.unfocus();
+    _chronologyFocusNode.unfocus();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: GestureDetector(
@@ -310,49 +360,5 @@ class _FieldReportCreateScreenState extends State<FieldReportCreateScreen> {
         });
       },
     );
-  }
-
-  @override
-  void dispose() {
-    _fieldReportCreateBloc.close();
-    super.dispose();
-  }
-
-  void _fetchUsers() async {
-    final users = await _repository.fetch();
-    setState(() {
-      _users = users;
-    });
-  }
-
-  void _submit() async {
-    final List<int> participants = _participants.map((p) => p.id).toList();
-
-    List<MultipartFile> images = <MultipartFile>[];
-    for (var image in _images) {
-      final ByteData byteData = await image.getByteData(quality: 50);
-      final List<int> imageData = byteData.buffer.asUint8List();
-      final MultipartFile file = MultipartFile.fromBytes(
-        imageData,
-        filename: image.name,
-        contentType: MediaType('image', 'png'),
-      );
-
-      images.add(file);
-    }
-
-    _unfocus();
-    _fieldReportCreateBloc.add(FieldReportCreateSubmitButtonPressed(
-      images: images,
-      title: _titleController.text,
-      chronology: _chronologyController.text,
-      participants: participants,
-    ));
-  }
-
-  void _unfocus() {
-    _titleFocusNode.unfocus();
-    _participantFocusNode.unfocus();
-    _chronologyFocusNode.unfocus();
   }
 }

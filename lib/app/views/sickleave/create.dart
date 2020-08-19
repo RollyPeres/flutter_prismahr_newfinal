@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_prismahr/app/bloc/sickleave_create/sickleave_create_bloc.dart';
-import 'package:flutter_prismahr/app/components/form_input_range_calendar.dart';
 import 'package:flutter_prismahr/app/components/form_input.dart';
+import 'package:flutter_prismahr/app/components/form_input_range_calendar.dart';
 import 'package:flutter_prismahr/app/components/multi_image_picker_component.dart';
 import 'package:flutter_prismahr/app/data/models/sickleave_form_validation_exception.dart';
 import 'package:http_parser/http_parser.dart';
@@ -39,6 +39,10 @@ class _SickleaveCreateScreenState extends State<SickleaveCreateScreen> {
 
   @override
   void dispose() {
+    _reasonController.dispose();
+    _detailsController.dispose();
+    _reasonFocus.dispose();
+    _detailsFocus.dispose();
     _sickleaveCreateBloc.close();
     super.dispose();
   }
