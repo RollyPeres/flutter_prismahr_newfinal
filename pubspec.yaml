@@ -3,7 +3,7 @@ description: A new Flutter project.
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `pub publish`. This is preferred for private packages.
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
 # The following defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
@@ -35,7 +35,7 @@ dependencies:
   pretty_json: ^1.0.9
   cached_network_image: ^2.2.0+1
   fl_chart: ^0.11.0
-  device_info: ^0.4.2+4
+  device_info: ^0.4.2+6
   flutter_svg: ^0.18.0
   flutter_rounded_date_picker: ^1.0.4 # there is a height issue with this ver.
   # flutter_rounded_date_picker: ^0.3.0 # this version is fine but the option is limited
@@ -55,7 +55,8 @@ dependencies:
   http_parser: ^3.1.4
   photo_view: ^0.10.0
   carousel_slider: ^2.2.1
-  connectivity: ^0.4.9
+  google_maps_flutter: ^0.5.30
+  # connectivity: ^0.4.9
 
 dev_dependencies:
   flutter_test:
@@ -65,7 +66,6 @@ dev_dependencies:
 # following page: https://dart.dev/tools/pub/pubspec
 # The following section is specific to Flutter.
 flutter:
-
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
@@ -77,6 +77,7 @@ flutter:
     - assets/icons/
     - assets/images/
     - assets/lottie/
+    - assets/json/googlemap_darktheme.json
   #   - images/a_dot_ham.jpeg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
@@ -137,4 +138,3 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
-

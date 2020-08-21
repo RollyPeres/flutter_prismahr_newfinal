@@ -6,11 +6,11 @@ class User {
   String emailVerifiedAt;
 
   User({
-    id,
-    avatar,
-    name,
-    email,
-    emailVerifiedAt,
+    this.id,
+    this.avatar,
+    this.name,
+    this.email,
+    this.emailVerifiedAt,
   });
 
   factory User.fromJson(Map<String, dynamic> json) {

@@ -10,6 +10,23 @@ typedef ChipsBuilder<T> = Widget Function(
     BuildContext context, FormChipsInputState<T> state, T data);
 
 class FormChipsInput<T> extends StatefulWidget {
+  FormChipsInput({
+    Key key,
+    this.label,
+    this.maxChips = 10,
+    this.controller,
+    this.hintText,
+    this.helperText,
+    this.prefixIcon,
+    this.debounceDuration = const Duration(milliseconds: 500),
+    this.wrapSpacing = 4.0,
+    this.runSpacing = 4.0,
+    @required this.suggestionsBuilder,
+    @required this.onSuggestionSelected,
+    @required this.onSearchChanged,
+    @required this.chipBuilder,
+  }) : super(key: key);
+
   final String label;
   final int maxChips;
   final Duration debounceDuration;
@@ -24,48 +41,39 @@ class FormChipsInput<T> extends StatefulWidget {
   final ChipsBuilder<T> chipBuilder;
   final OnSearchChanged onSearchChanged;
 
-  FormChipsInput({
-    Key key,
-    this.label,
-    this.maxChips = 10,
-    this.controller,
-    this.hintText,
-    this.helperText,
-    this.prefixIcon,
-    this.debounceDuration = const Duration(milliseconds: 500),
-    this.wrapSpacing,
-    this.runSpacing,
-    @required this.suggestionsBuilder,
-    @required this.onSuggestionSelected,
-    @required this.onSearchChanged,
-    @required this.chipBuilder,
-  }) : super(key: key);
-
   @override
   FormChipsInputState<T> createState() => FormChipsInputState<T>();
 }
 
 class FormChipsInputState<T> extends State<FormChipsInput<T>> {
-  bool get _hasReachedMaxChips => _chips.length >= widget.maxChips;
+  bool get _hasReachedMaxChips => chips.length >= widget.maxChips;
 
-  List<dynamic> _chips;
+  TextEditingController _controller;
+  List<T> chips;
 
   @override
   void initState() {
     super.initState();
-    _chips = List<dynamic>();
+    chips = List<T>();
+    _controller = widget.controller ?? TextEditingController();
   }
 
-  void _onSuggestionSelected(dynamic item) {
-    if (!_hasReachedMaxChips) _chips.add(item);
-    widget.controller?.clear();
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  void _onSuggestionSelected(T item) {
+    if (!_hasReachedMaxChips) chips.add(item);
+    _controller.clear();
 
     widget.onSuggestionSelected(item);
   }
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> chipsChildren = _chips
+    List<Widget> chipsChildren = chips
         .map<Widget>((chip) => widget.chipBuilder(context, this, chip))
         .toList();
 
@@ -74,7 +82,7 @@ class FormChipsInputState<T> extends State<FormChipsInput<T>> {
       children: [
         _buildLabelAndLimitCounter(),
         _hasReachedMaxChips ? _buildMaxChipsNotifier() : _buildTypeAheadField(),
-        _chips.isNotEmpty ? _buildChipsDisplay(chipsChildren) : SizedBox(),
+        chips.isNotEmpty ? _buildChipsDisplay(chipsChildren) : SizedBox(),
       ],
     );
   }
@@ -86,7 +94,7 @@ class FormChipsInputState<T> extends State<FormChipsInput<T>> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text('${widget.label}'),
-          Text('${_chips.length} of ${widget.maxChips}'),
+          Text('${chips.length} of ${widget.maxChips}'),
         ],
       ),
     );
@@ -109,7 +117,7 @@ class FormChipsInputState<T> extends State<FormChipsInput<T>> {
         itemBuilder: widget.suggestionsBuilder,
         debounceDuration: widget.debounceDuration,
         textFieldConfiguration: TextFieldConfiguration(
-          controller: widget.controller,
+          controller: _controller,
           enabled: !_hasReachedMaxChips,
           decoration: InputDecoration(
             contentPadding: const EdgeInsets.symmetric(
@@ -129,6 +137,8 @@ class FormChipsInputState<T> extends State<FormChipsInput<T>> {
         ),
         onSuggestionSelected: _onSuggestionSelected,
         suggestionsCallback: widget.onSearchChanged,
+        hideOnLoading: true,
+        keepSuggestionsOnLoading: true,
         suggestionsBoxDecoration: SuggestionsBoxDecoration(
           elevation: 4.0,
           constraints: BoxConstraints(maxHeight: 300),
@@ -144,8 +154,8 @@ class FormChipsInputState<T> extends State<FormChipsInput<T>> {
     return Padding(
       padding: const EdgeInsets.only(bottom: 20.0),
       child: Wrap(
-        spacing: widget.wrapSpacing ?? 4.0,
-        runSpacing: widget.runSpacing ?? 4.0,
+        spacing: widget.wrapSpacing,
+        runSpacing: widget.runSpacing,
         children: chipsChildren,
       ),
     );

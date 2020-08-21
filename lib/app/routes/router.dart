@@ -10,15 +10,18 @@ import 'package:flutter_prismahr/app/views/account_info/experiences/experience.d
 import 'package:flutter_prismahr/app/views/account_info/experiences/experience_add.dart';
 import 'package:flutter_prismahr/app/views/account_info/personal/personal.dart';
 import 'package:flutter_prismahr/app/views/account_info/personal/personal_edit.dart';
+import 'package:flutter_prismahr/app/views/event.dart';
+import 'package:flutter_prismahr/app/views/event/create.dart';
+import 'package:flutter_prismahr/app/views/field_report.dart';
 import 'package:flutter_prismahr/app/views/field_report/create.dart';
 import 'package:flutter_prismahr/app/views/field_report/show.dart';
 import 'package:flutter_prismahr/app/views/field_report/update.dart';
 import 'package:flutter_prismahr/app/views/home.dart';
-import 'package:flutter_prismahr/app/views/field_report.dart';
 import 'package:flutter_prismahr/app/views/leave.dart';
 import 'package:flutter_prismahr/app/views/leave/create.dart';
 import 'package:flutter_prismahr/app/views/loan.dart';
 import 'package:flutter_prismahr/app/views/loan/create.dart';
+import 'package:flutter_prismahr/app/views/map.dart';
 import 'package:flutter_prismahr/app/views/reimburse.dart';
 import 'package:flutter_prismahr/app/views/reimburse/create.dart';
 import 'package:flutter_prismahr/app/views/sickleave.dart';
@@ -103,6 +106,15 @@ class Router {
 
       case Routes.LOAN_CREATE:
         return MaterialPageRoute(builder: (_) => LoanCreateScreen());
+
+      case Routes.EVENT:
+        return MaterialPageRoute(builder: (_) => EventScreen());
+
+      case Routes.EVENT_CREATE:
+        return MaterialPageRoute(builder: (_) => EventCreateScreen());
+
+      case Routes.MAP:
+        return MaterialPageRoute(builder: (_) => MapScreen());
 
       default:
         return MaterialPageRoute(

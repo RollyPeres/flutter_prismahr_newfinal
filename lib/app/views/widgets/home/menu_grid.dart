@@ -53,7 +53,9 @@ class MenuGrid extends StatelessWidget {
           Menu(
             asset: 'assets/icons/icon-calendar.svg',
             text: 'Events',
-            onTap: () {},
+            onTap: () {
+              Navigator.of(context).pushNamed(Routes.EVENT);
+            },
           ),
           Menu(
             asset: 'assets/icons/icon-money-check.svg',
