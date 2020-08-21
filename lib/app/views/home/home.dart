@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_prismahr/app/views/widgets/home/announcement_card.dart';
-import 'package:flutter_prismahr/app/views/widgets/home/bottom_navbar.dart';
-import 'package:flutter_prismahr/app/views/widgets/home/header.dart';
-import 'package:flutter_prismahr/app/views/widgets/home/menu_grid.dart';
-import 'package:flutter_prismahr/app/views/widgets/home/performance_chart.dart';
-import 'package:flutter_prismahr/app/views/widgets/home/week_counter.dart';
+
+import 'components/announcement_card.dart';
+import 'components/bottom_navbar.dart';
+import 'components/header.dart';
+import 'components/menu_grid.dart';
+import 'components/performance_chart.dart';
+import 'components/week_counter.dart';
 
 class HomePage extends StatelessWidget {
   @override

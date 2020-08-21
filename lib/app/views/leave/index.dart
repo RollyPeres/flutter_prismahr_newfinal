@@ -4,8 +4,9 @@ import 'package:flutter_prismahr/app/bloc/leave/leave_bloc.dart';
 import 'package:flutter_prismahr/app/components/empty.dart';
 import 'package:flutter_prismahr/app/data/models/leave_model.dart';
 import 'package:flutter_prismahr/app/routes/routes.dart';
-import 'package:flutter_prismahr/app/views/widgets/leave/leave_list.dart';
-import 'package:flutter_prismahr/app/views/widgets/leave/leave_list_loading.dart';
+
+import 'components/leave_list.dart';
+import 'components/leave_list_loading.dart';
 
 class LeaveScreen extends StatefulWidget {
   LeaveScreen({Key key}) : super(key: key);

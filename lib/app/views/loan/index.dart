@@ -4,8 +4,9 @@ import 'package:flutter_prismahr/app/bloc/loan/loan_bloc.dart';
 import 'package:flutter_prismahr/app/components/empty.dart';
 import 'package:flutter_prismahr/app/data/models/loan_model.dart';
 import 'package:flutter_prismahr/app/routes/routes.dart';
-import 'package:flutter_prismahr/app/views/widgets/loan/loan_list.dart';
-import 'package:flutter_prismahr/app/views/widgets/loan/loan_list_loading.dart';
+
+import 'components/loan_list.dart';
+import 'components/loan_list_loading.dart';
 
 class LoanScreen extends StatefulWidget {
   LoanScreen({Key key}) : super(key: key);

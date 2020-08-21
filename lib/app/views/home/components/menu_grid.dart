@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_prismahr/app/routes/routes.dart';
-import 'package:flutter_prismahr/app/views/widgets/home/menu.dart';
+
+import 'menu.dart';
 
 class MenuGrid extends StatelessWidget {
   const MenuGrid({Key key}) : super(key: key);

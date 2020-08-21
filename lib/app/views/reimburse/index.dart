@@ -4,8 +4,9 @@ import 'package:flutter_prismahr/app/bloc/reimburse/reimburse_bloc.dart';
 import 'package:flutter_prismahr/app/components/empty.dart';
 import 'package:flutter_prismahr/app/data/models/reimburse_model.dart';
 import 'package:flutter_prismahr/app/routes/routes.dart';
-import 'package:flutter_prismahr/app/views/widgets/reimburse/reimburse_list.dart';
-import 'package:flutter_prismahr/app/views/widgets/reimburse/reimburse_list_loading.dart';
+
+import 'components/reimburse_list.dart';
+import 'components/reimburse_list_loading.dart';
 
 class ReimburseScreen extends StatefulWidget {
   ReimburseScreen({Key key}) : super(key: key);

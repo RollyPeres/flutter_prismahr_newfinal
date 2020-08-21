@@ -4,8 +4,9 @@ import 'package:flutter_prismahr/app/bloc/event/event_bloc.dart';
 import 'package:flutter_prismahr/app/components/empty.dart';
 import 'package:flutter_prismahr/app/data/models/event_model.dart';
 import 'package:flutter_prismahr/app/routes/routes.dart';
-import 'package:flutter_prismahr/app/views/widgets/event/event_list.dart';
-import 'package:flutter_prismahr/app/views/widgets/event/event_list_loading.dart';
+
+import 'components/event_list.dart';
+import 'components/event_list_loading.dart';
 
 class EventScreen extends StatefulWidget {
   EventScreen({Key key}) : super(key: key);

@@ -4,8 +4,9 @@ import 'package:flutter_prismahr/app/bloc/sickleave/sickleave_bloc.dart';
 import 'package:flutter_prismahr/app/components/empty.dart';
 import 'package:flutter_prismahr/app/data/models/sickleave_model.dart';
 import 'package:flutter_prismahr/app/routes/routes.dart';
-import 'package:flutter_prismahr/app/views/widgets/sickleave/sickleave_list.dart';
-import 'package:flutter_prismahr/app/views/widgets/sickleave/sickleave_list_loading.dart';
+
+import 'components/sickleave_list.dart';
+import 'components/sickleave_list_loading.dart';
 
 class SickleaveScreen extends StatefulWidget {
   SickleaveScreen({Key key}) : super(key: key);

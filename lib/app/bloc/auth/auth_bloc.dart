@@ -18,7 +18,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     AuthEvent event,
   ) async* {
     if (event is AppStarted) {
-      // await repository.deleteToken();
+      await repository.deleteToken();
       final bool hasToken = await repository.hasToken();
       final User user = await repository.fetchProfile();
       if (hasToken) {

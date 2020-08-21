@@ -3,7 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_prismahr/app/bloc/auth/auth_bloc.dart';
 import 'package:flutter_prismahr/app/bloc/login/login_bloc.dart';
 import 'package:flutter_prismahr/app/data/repositories/auth_repository.dart';
-import 'package:flutter_prismahr/app/views/widgets/login/login_form.dart';
+
+import 'components/login_form.dart';
 
 class LoginScreen extends StatefulWidget {
   final AuthRepository repository;

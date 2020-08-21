@@ -6,8 +6,9 @@ import 'package:flutter_prismahr/app/components/form_dropdown_searchable.dart';
 import 'package:flutter_prismahr/app/components/selectable_outline_buttons.dart';
 import 'package:flutter_prismahr/app/data/models/loan_model.dart';
 import 'package:flutter_prismahr/app/data/repositories/loan_purpose_repository.dart';
-import 'package:flutter_prismahr/app/views/loan/widgets/loan_summary.dart';
 import 'package:intl/intl.dart';
+
+import 'components/loan_summary.dart';
 
 class LoanCreateScreen extends StatefulWidget {
   LoanCreateScreen({Key key}) : super(key: key);
