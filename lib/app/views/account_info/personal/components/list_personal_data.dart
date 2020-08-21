@@ -14,30 +14,37 @@ class ListPersonalData extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String birthdate;
+    String expirationDate;
+
+    if (this.data.birthdate != null) {
+      birthdate = DateFormat.yMMMMd().format(
+        DateFormat('yyyy-MM-dd').parse(this.data.birthdate),
+      );
+    }
+
+    if (this.data.idExpiryDate != null) {
+      expirationDate = DateFormat.yMMMMd().format(
+        DateFormat('yyyy-MM-dd').parse(this.data.idExpiryDate),
+      );
+    }
+
     return Column(
       children: <Widget>[
         ListViewCardGroup(
           title: 'General Information',
-          items: <ListViewCardContent>[
+          items: [
             ListViewCardContent(
               label: 'Gender',
-              value: this.data == null
-                  ? 'Processing...'
-                  : this.data.gender ?? 'Not set',
+              value: this.data.gender ?? 'Not set',
             ),
             ListViewCardContent(
               label: 'Birth Date',
-              value: this.data == null
-                  ? 'Processing...'
-                  : DateFormat.yMMMMd().format(DateFormat('yyyy-MM-dd')
-                          .parse(this.data.birthdate)) ??
-                      'Not set',
+              value: birthdate ?? 'Not set',
             ),
             ListViewCardContent(
               label: 'Birth Place',
-              value: this.data == null
-                  ? 'Processing...'
-                  : this.data.birthplace ?? 'Not set',
+              value: this.data.birthplace ?? 'Not set',
             ),
           ],
         ),
@@ -46,21 +53,15 @@ class ListPersonalData extends StatelessWidget {
           items: <ListViewCardContent>[
             ListViewCardContent(
               label: 'Marital Status',
-              value: this.data == null
-                  ? 'Processing...'
-                  : this.data.maritalStatus ?? 'Not set',
+              value: this.data.maritalStatus ?? 'Not set',
             ),
             ListViewCardContent(
               label: 'Religion',
-              value: this.data == null
-                  ? 'Processing...'
-                  : this.data.religion ?? 'Not set',
+              value: this.data.religion ?? 'Not set',
             ),
             ListViewCardContent(
               label: 'Blood Type',
-              value: this.data == null
-                  ? 'Processing...'
-                  : this.data.bloodType ?? 'Not set',
+              value: this.data.bloodType ?? 'Not set',
             ),
           ],
         ),
@@ -69,36 +70,24 @@ class ListPersonalData extends StatelessWidget {
           items: <ListViewCardContent>[
             ListViewCardContent(
               label: 'Number',
-              value: this.data == null
-                  ? 'Processing...'
-                  : this.data.idNumber?.toString() ?? 'Not set',
+              value: this.data.idNumber?.toString() ?? 'Not set',
             ),
             ListViewCardContent(
               label: 'Type',
-              value: this.data == null
-                  ? 'Processing...'
-                  : this.data.idType ?? 'Not set',
+              value: this.data.idType ?? 'Not set',
             ),
             ListViewCardContent(
               label: 'Expiration Date',
-              value: this.data == null
-                  ? 'Processing...'
-                  : DateFormat.yMMMMd().format(DateFormat('yyyy-MM-dd')
-                          .parse(this.data.idExpiryDate)) ??
-                      'Not set',
+              value: expirationDate ?? 'Not set',
             ),
             ListViewCardContent(
               label: 'Address',
-              value: this.data == null
-                  ? 'Processing...'
-                  : this.data.address ?? 'Not set',
+              value: this.data.address ?? 'Not set',
               extended: true,
             ),
             ListViewCardContent(
               label: 'Current Address',
-              value: this.data == null
-                  ? 'Processing...'
-                  : this.data.addressCurrent ?? 'Not set',
+              value: this.data.addressCurrent ?? 'Not set',
               extended: true,
             ),
           ],

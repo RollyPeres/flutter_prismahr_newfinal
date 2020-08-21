@@ -2,11 +2,11 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter_prismahr/app/data/models/account_info/personal_edit_validation_exception_model.dart';
 import 'package:flutter_prismahr/app/data/models/account_info/personal_model.dart';
 import 'package:flutter_prismahr/app/data/repositories/account_info/personal_repository.dart';
 import 'package:intl/intl.dart';
 import 'package:meta/meta.dart';
-import 'package:flutter_prismahr/app/data/models/account_info/personal_edit_validation_exception_model.dart';
 
 part 'personal_edit_event.dart';
 part 'personal_edit_state.dart';
@@ -44,10 +44,9 @@ class PersonalEditBloc extends Bloc<PersonalEditEvent, PersonalEditState> {
 
         if (response is PersonalEditValidationException) {
           yield PersonalEditInvalid(exception: response);
-          return;
+        } else {
+          yield PersonalEditSuccess(data: response);
         }
-
-        yield PersonalEditSuccess(data: response);
       } catch (error) {
         yield PersonalEditFailure(error: error);
       }

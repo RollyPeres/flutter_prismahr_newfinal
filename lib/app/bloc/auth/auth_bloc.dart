@@ -1,6 +1,8 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:bloc/bloc.dart';
+import 'package:device_info/device_info.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_prismahr/app/data/models/user_model.dart';
 import 'package:flutter_prismahr/app/data/repositories/auth_repository.dart';
@@ -18,7 +20,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     AuthEvent event,
   ) async* {
     if (event is AppStarted) {
-      await repository.deleteToken();
+      // await Preferences.removeToken();
       final bool hasToken = await repository.hasToken();
       final User user = await repository.fetchProfile();
       if (hasToken) {
@@ -29,16 +31,27 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     }
 
     if (event is LoggedIn) {
-      yield AuthLoading();
       final bool tokenStored = await repository.storeToken(event.token);
       final User user = await repository.fetchProfile();
       if (tokenStored) yield AuthAuthenticated(user: user);
     }
 
     if (event is LoggedOut) {
-      yield AuthLoading();
-      final bool tokenDeleted = await repository.deleteToken();
+      final Map<String, dynamic> data = Map<String, dynamic>();
+      data['user_agent'] = _getPlatformSpecificInformation();
+
+      final bool tokenDeleted = await repository.logout(data);
       if (tokenDeleted) yield AuthUnauthenticated();
     }
+  }
+
+  Future<String> _getPlatformSpecificInformation() async {
+    if (Platform.isIOS) {
+      final iosInfo = await DeviceInfoPlugin().iosInfo;
+      return iosInfo.name;
+    }
+
+    final androidInfo = await DeviceInfoPlugin().androidInfo;
+    return androidInfo.device;
   }
 }

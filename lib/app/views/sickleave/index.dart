@@ -66,8 +66,14 @@ class _SickleaveScreenState extends State<SickleaveScreen> {
                 },
                 child: BlocBuilder<SickleaveBloc, SickleaveState>(
                   builder: (context, state) {
-                    if (state is! SickleaveLoading) {
-                      return SickleaveList(data: _sickleaves);
+                    if (state is SickleaveLoading) {
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 20,
+                          vertical: 30,
+                        ),
+                        child: SickleaveListLoading(),
+                      );
                     }
 
                     if (state is SickleaveEmpty) {
@@ -77,13 +83,7 @@ class _SickleaveScreenState extends State<SickleaveScreen> {
                       );
                     }
 
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 20,
-                        vertical: 30,
-                      ),
-                      child: SickleaveListLoading(),
-                    );
+                    return SickleaveList(data: _sickleaves);
                   },
                 ),
               ),

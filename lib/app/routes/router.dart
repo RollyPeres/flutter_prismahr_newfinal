@@ -53,7 +53,7 @@ class Router {
       case Routes.ACCOUNT_INFO_PERSONAL_EDIT:
         return MaterialPageRoute(
           builder: (_) => PersonalEditScreen(
-            data: settings.arguments,
+            data: args.model,
           ),
         );
 

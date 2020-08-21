@@ -14,35 +14,37 @@ class PersonalModel {
   int postcode;
 
   PersonalModel({
-    id,
-    gender,
-    birthplace,
-    birthdate,
-    maritalStatus,
-    religion,
-    bloodType,
-    idNumber,
-    idType,
-    idExpiryDate,
-    address,
-    addressCurrent,
-    postcode,
+    this.id,
+    this.gender,
+    this.birthplace,
+    this.birthdate,
+    this.maritalStatus,
+    this.religion,
+    this.bloodType,
+    this.idNumber,
+    this.idType,
+    this.idExpiryDate,
+    this.address,
+    this.addressCurrent,
+    this.postcode,
   });
 
-  PersonalModel.fromJson(Map<String, dynamic> json) {
-    this.id = json['id'];
-    this.gender = json['gender'];
-    this.birthdate = json['birthdate'];
-    this.birthplace = json['birthplace'];
-    this.maritalStatus = json['marital_status'];
-    this.religion = json['religion'];
-    this.bloodType = json['blood_type'];
-    this.idNumber = json['identity_number'];
-    this.idType = json['identity_type'];
-    this.idExpiryDate = json['identity_expiry_date'];
-    this.address = json['address'];
-    this.addressCurrent = json['current_address'];
-    this.postcode = json['postcode'];
+  factory PersonalModel.fromJson(Map<String, dynamic> json) {
+    return PersonalModel(
+      id: json['id'],
+      gender: json['gender'],
+      birthdate: json['birthdate'],
+      birthplace: json['birthplace'],
+      maritalStatus: json['marital_status'],
+      religion: json['religion'],
+      bloodType: json['blood_type'],
+      idNumber: json['identity_number'],
+      idType: json['identity_type'],
+      idExpiryDate: json['identity_expiry_date'],
+      address: json['address'],
+      addressCurrent: json['current_address'],
+      postcode: json['postcode'],
+    );
   }
 
   Map<String, dynamic> toJson() {

@@ -20,7 +20,6 @@ class LoanCreateScreen extends StatefulWidget {
 class _LoanCreateScreenState extends State<LoanCreateScreen> {
   List<LoanTenor> _loanTenors = <LoanTenor>[];
   LoanCreateBloc _loanCreateBloc;
-  LoanFormValidationException _errors;
   LoanPurposeRepository _loanPurposeRepository;
   LoanPurpose _selectedLoanPurpose;
   LoanTenor _selectedLoanTenor;
@@ -166,9 +165,7 @@ class _LoanCreateScreenState extends State<LoanCreateScreen> {
           child: BlocListener<LoanCreateBloc, LoanCreateState>(
             listener: (context, state) {
               if (state is LoanCreateInvalid) {
-                setState(() {
-                  _errors = state.exception;
-                });
+                setState(() {});
               }
 
               if (state is LoanCreateSuccess) {

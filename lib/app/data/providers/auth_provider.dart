@@ -5,9 +5,7 @@ import 'package:meta/meta.dart';
 class AuthProvider {
   final Dio httpClient;
 
-  AuthProvider({
-    @required this.httpClient,
-  }) : assert(httpClient != null);
+  AuthProvider({@required this.httpClient}) : assert(httpClient != null);
 
   Future authenticate({
     @required Map<String, dynamic> data,
@@ -36,6 +34,19 @@ class AuthProvider {
     } catch (e) {
       print(e);
       return null;
+    }
+  }
+
+  Future<bool> logout(Map<String, dynamic> data) async {
+    try {
+      final Response response = await httpClient.post(
+        'auth/logout',
+        data: data,
+      );
+      return response.data['success'];
+    } catch (e) {
+      print(e);
+      return false;
     }
   }
 }

@@ -14,7 +14,6 @@ class AuthRepository {
     @required String password,
     @required String userAgent,
   }) async {
-    await Future.delayed(Duration(seconds: 5));
     final Map<String, dynamic> data = Map<String, dynamic>();
     data['email'] = email;
     data['password'] = password;
@@ -26,7 +25,10 @@ class AuthRepository {
     return provider.fetchProfile();
   }
 
-  Future<bool> deleteToken() async {
+  Future<bool> logout(Map<String, dynamic> data) async {
+    bool loggedOut = await provider.logout(data);
+
+    if (!loggedOut) return false;
     return Preferences.removeToken();
   }
 
@@ -35,7 +37,6 @@ class AuthRepository {
   }
 
   Future<bool> hasToken() async {
-    await Future.delayed(Duration(seconds: 5));
     return Preferences.hasToken();
   }
 }

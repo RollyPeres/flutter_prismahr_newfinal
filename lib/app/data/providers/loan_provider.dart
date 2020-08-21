@@ -22,7 +22,6 @@ class LoanProvider {
   }
 
   Future<dynamic> store(Map<String, dynamic> data) async {
-    await Future.delayed(Duration(seconds: 5));
     try {
       final Response response = await httpClient.post(
         'loans',

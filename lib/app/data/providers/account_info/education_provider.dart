@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_prismahr/app/data/models/account_info/education_form_validation_exception_model.dart';
-import 'package:meta/meta.dart';
 import 'package:flutter_prismahr/app/data/models/account_info/education_model.dart';
+import 'package:meta/meta.dart';
 
 class EducationProvider {
   final Dio httpClient;
@@ -9,7 +9,6 @@ class EducationProvider {
   EducationProvider({@required this.httpClient}) : assert(httpClient != null);
 
   Future fetch() async {
-    await Future.delayed(Duration(seconds: 5));
     try {
       final Response response = await httpClient.get('user/educationInfo');
 
@@ -29,7 +28,6 @@ class EducationProvider {
   }
 
   Future store(Map<String, dynamic> data) async {
-    await Future.delayed(Duration(seconds: 5));
     try {
       final Response response =
           await httpClient.post('user/educationInfo', data: data);

@@ -66,24 +66,26 @@ class _LeaveScreenState extends State<LeaveScreen> {
                 },
                 child: BlocBuilder<LeaveBloc, LeaveState>(
                   builder: (context, state) {
-                    if (state is! LeaveLoading) {
-                      return LeaveList(data: _leaves);
+                    print('CURRENT STATE IS $state');
+                    if (state is LeaveLoading) {
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 20,
+                          vertical: 30,
+                        ),
+                        child: LeaveListLoading(),
+                      );
                     }
 
                     if (state is LeaveEmpty) {
+                      print('LEAVE EMPTY');
                       return Padding(
                         padding: const EdgeInsets.only(top: 100),
                         child: Empty(),
                       );
                     }
 
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 20,
-                        vertical: 30,
-                      ),
-                      child: LeaveListLoading(),
-                    );
+                    return LeaveList(data: _leaves);
                   },
                 ),
               ),

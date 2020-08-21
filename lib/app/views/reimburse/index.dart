@@ -60,8 +60,14 @@ class _ReimburseScreenState extends State<ReimburseScreen> {
                 },
                 child: BlocBuilder<ReimburseBloc, ReimburseState>(
                   builder: (context, state) {
-                    if (state is! ReimburseLoading) {
-                      return ReimburseList(data: _reimburses);
+                    if (state is ReimburseLoading) {
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 20,
+                          vertical: 30,
+                        ),
+                        child: ReimburseListLoading(),
+                      );
                     }
 
                     if (state is ReimburseEmpty) {
@@ -71,13 +77,7 @@ class _ReimburseScreenState extends State<ReimburseScreen> {
                       );
                     }
 
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 20,
-                        vertical: 30,
-                      ),
-                      child: ReimburseListLoading(),
-                    );
+                    return ReimburseList(data: _reimburses);
                   },
                 ),
               ),

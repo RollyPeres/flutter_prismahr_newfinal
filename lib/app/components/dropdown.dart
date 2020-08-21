@@ -45,6 +45,7 @@ class Dropdown extends StatelessWidget {
               ),
               errorText: this.errorText,
               filled: true,
+              fillColor: Theme.of(context).cardColor,
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10),
                 borderSide: BorderSide(

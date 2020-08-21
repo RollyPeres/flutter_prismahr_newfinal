@@ -2,9 +2,9 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter_prismahr/app/data/models/account_info/education_model.dart';
 import 'package:flutter_prismahr/app/data/repositories/account_info/education_repository.dart';
 import 'package:meta/meta.dart';
-import 'package:flutter_prismahr/app/data/models/account_info/education_model.dart';
 
 part 'education_event.dart';
 part 'education_state.dart';
@@ -32,7 +32,7 @@ class EducationBloc extends Bloc<EducationEvent, EducationState> {
 
         yield EducationLoaded(data: educations);
       } catch (error) {
-        yield EducationFailure(error: error);
+        yield EducationFailure(error: error.toString());
       }
     }
 

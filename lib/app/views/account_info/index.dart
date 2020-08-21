@@ -9,8 +9,27 @@ import 'package:flutter_prismahr/app/views/account_info/components/dark_mode_swi
 import 'package:flutter_prismahr/app/views/account_info/components/header.dart';
 import 'package:flutter_prismahr/app/views/account_info/components/profile_menu.dart';
 
-class AccountInfoScreen extends StatelessWidget {
+class AccountInfoScreen extends StatefulWidget {
   const AccountInfoScreen({Key key}) : super(key: key);
+
+  @override
+  _AccountInfoScreenState createState() => _AccountInfoScreenState();
+}
+
+class _AccountInfoScreenState extends State<AccountInfoScreen> {
+  AuthBloc _authBloc;
+
+  @override
+  void initState() {
+    super.initState();
+    _authBloc = BlocProvider.of<AuthBloc>(context);
+  }
+
+  @override
+  void dispose() {
+    _authBloc.close();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -148,17 +167,21 @@ class AccountInfoScreen extends StatelessWidget {
                 ),
               ],
             ),
-            FlatButton(
-              child: Text(
-                "Sign out",
-                style: TextStyle(
-                  fontWeight: FontWeight.w600,
-                  color: Color(0xffe82828),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 20.0),
+              child: FlatButton(
+                child: Text(
+                  "Sign out",
+                  style: TextStyle(
+                    fontWeight: FontWeight.w600,
+                    color: Color(0xffe82828),
+                  ),
                 ),
+                onPressed: () {
+                  // FIXME: logout doesn't work
+                  _authBloc.add(LoggedOut());
+                },
               ),
-              onPressed: () {
-                // TODO: Add navigator for sign out
-              },
             ),
             Column(
               children: <Widget>[

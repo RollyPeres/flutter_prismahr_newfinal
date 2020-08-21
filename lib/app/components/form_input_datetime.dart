@@ -1,11 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_prismahr/app/bloc/theme/theme_bloc.dart';
 import 'package:flutter_prismahr/app/components/form_input.dart';
-import 'package:flutter_prismahr/app/themes/themes.dart';
-import 'package:flutter_rounded_date_picker/rounded_picker.dart';
-// ignore: implementation_imports
-import 'package:flutter_rounded_date_picker/src/material_rounded_date_picker_style.dart';
 import 'package:intl/intl.dart';
 
 class FormInputDateTime extends StatelessWidget {
@@ -32,9 +26,6 @@ class FormInputDateTime extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ThemeMode currentTheme =
-        BlocProvider.of<ThemeBloc>(context).state.themeMode;
-
     return GestureDetector(
       child: AbsorbPointer(
         child: FormInput(
@@ -46,34 +37,13 @@ class FormInputDateTime extends StatelessWidget {
         ),
       ),
       onTap: () async {
-        DateTime date = await showRoundedDatePicker(
+        DateTime date = await showDatePicker(
           context: context,
-          borderRadius: 20,
           initialDate: this.initialDate != null
               ? DateFormat('yyyy-MM-dd').parse(this.initialDate)
-              : DateTime.now(),
+              : DateTime.now().subtract(Duration(seconds: 60)),
           firstDate: this.firstDate ?? DateTime(1900),
-          lastDate: this.lastDate,
-          customWeekDays: ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"],
-          styleDatePicker: MaterialRoundedDatePickerStyle(
-            sizeArrow: 0,
-            paddingDatePicker: EdgeInsets.all(13),
-            paddingMonthHeader: EdgeInsets.symmetric(vertical: 7),
-            decorationDateSelected: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              color: Theme.of(context).primaryColor,
-            ),
-            textStyleMonthYearHeader: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-            ),
-            textStyleDayOnCalendarSelected: TextStyle(
-              color: Colors.white,
-            ),
-          ),
-          theme: currentTheme == ThemeMode.dark
-              ? AppTheme.darkTheme
-              : AppTheme.lightTheme,
+          lastDate: this.lastDate ?? DateTime.now(),
         );
         onDateSelected(date);
       },

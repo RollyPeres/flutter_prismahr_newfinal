@@ -66,8 +66,14 @@ class _EventScreenState extends State<EventScreen> {
                 },
                 child: BlocBuilder<EventBloc, EventState>(
                   builder: (context, state) {
-                    if (state is! EventLoading) {
-                      return EventList(data: _events);
+                    if (state is EventLoading) {
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 20,
+                          vertical: 30,
+                        ),
+                        child: EventListLoading(),
+                      );
                     }
 
                     if (state is EventEmpty) {
@@ -77,13 +83,7 @@ class _EventScreenState extends State<EventScreen> {
                       );
                     }
 
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 20,
-                        vertical: 30,
-                      ),
-                      child: EventListLoading(),
-                    );
+                    return EventList(data: _events);
                   },
                 ),
               ),

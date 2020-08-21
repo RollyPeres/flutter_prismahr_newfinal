@@ -60,8 +60,14 @@ class _LoanScreenState extends State<LoanScreen> {
                 },
                 child: BlocBuilder<LoanBloc, LoanState>(
                   builder: (context, state) {
-                    if (state is! LoanLoading) {
-                      return LoanList(data: _loans);
+                    if (state is LoanLoading) {
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 20,
+                          vertical: 30,
+                        ),
+                        child: LoanListLoading(),
+                      );
                     }
 
                     if (state is LoanEmpty) {
@@ -71,13 +77,7 @@ class _LoanScreenState extends State<LoanScreen> {
                       );
                     }
 
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 20,
-                        vertical: 30,
-                      ),
-                      child: LoanListLoading(),
-                    );
+                    return LoanList(data: _loans);
                   },
                 ),
               ),

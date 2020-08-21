@@ -1,7 +1,7 @@
-import 'package:flutter_prismahr/app/data/models/account_info/personal_model.dart';
-import 'package:flutter_prismahr/app/data/models/account_info/personal_edit_validation_exception_model.dart';
-import 'package:meta/meta.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter_prismahr/app/data/models/account_info/personal_edit_validation_exception_model.dart';
+import 'package:flutter_prismahr/app/data/models/account_info/personal_model.dart';
+import 'package:meta/meta.dart';
 
 class PersonalProvider {
   final Dio httpClient;
@@ -26,7 +26,6 @@ class PersonalProvider {
   }
 
   Future update(Map<String, dynamic> data) async {
-    await Future.delayed(Duration(seconds: 5));
     try {
       final Response response =
           await httpClient.post('user/personalInfo', data: data);
