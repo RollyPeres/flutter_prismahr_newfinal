@@ -32,14 +32,6 @@ class _LeaveScreenState extends State<LeaveScreen> {
   }
 
   @override
-  void dispose() {
-    print('DISPOSE CALLED');
-    _leaveBloc.close();
-    _leaveUpdateBloc.close();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: CustomScrollView(
