@@ -3,14 +3,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_prismahr/app/components/badge.dart';
 import 'package:flutter_prismahr/app/components/rounded_rectangle_avatar.dart';
 import 'package:flutter_prismahr/app/data/models/leave_model.dart';
+import 'package:flutter_prismahr/app/routes/route_arguments.dart';
+import 'package:flutter_prismahr/app/routes/routes.dart';
 import 'package:grouped_list/grouped_list.dart';
 import 'package:intl/intl.dart';
 
 class LeaveList extends StatelessWidget {
   final List<Leave> data;
 
-  const LeaveList({Key key, @required this.data})
-      : assert(data != null),
+  const LeaveList({
+    Key key,
+    @required this.data,
+  })  : assert(data != null),
         super(key: key);
 
   @override
@@ -110,7 +114,12 @@ class LeaveList extends StatelessWidget {
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
         ),
-        onTap: () {},
+        onTap: () {
+          Navigator.of(context).pushNamed(
+            Routes.LEAVE_SHOW,
+            arguments: RouteArguments(model: leave),
+          );
+        },
       ),
     );
   }

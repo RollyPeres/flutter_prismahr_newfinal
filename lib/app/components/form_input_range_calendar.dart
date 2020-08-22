@@ -59,6 +59,14 @@ class _FormInputRangeCalendarState extends State<FormInputRangeCalendar> {
     super.didChangeDependencies();
     _localizations = MaterialLocalizations.of(context);
     _textDirection = Directionality.of(context);
+
+    if (widget.initialDateRange != null) {
+      _startDateInputController.text =
+          _localizations.formatShortMonthDay(widget.initialDateRange.start);
+
+      _endDateInputController.text =
+          _localizations.formatShortMonthDay(widget.initialDateRange.end);
+    }
   }
 
   Future<void> _showDateRangePicker(BuildContext context) async {

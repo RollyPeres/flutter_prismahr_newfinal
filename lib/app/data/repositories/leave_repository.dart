@@ -11,4 +11,8 @@ class LeaveRepository {
   Future<dynamic> add(Map<String, dynamic> data) {
     return provider.store(data);
   }
+
+  Future<dynamic> update(Map<String, dynamic> data) {
+    return provider.update(data);
+  }
 }

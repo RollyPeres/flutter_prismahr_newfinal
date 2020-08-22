@@ -46,17 +46,26 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  AuthBloc authBloc;
-  ThemeBloc themeBloc;
+  final Router _router = Router();
+  AuthBloc _authBloc;
+  ThemeBloc _themeBloc;
 
   AuthRepository get repository => widget.repository;
 
   @override
   void initState() {
-    authBloc = AuthBloc(repository: repository);
-    themeBloc = ThemeBloc();
-    authBloc.add(AppStarted());
+    _authBloc = AuthBloc(repository: repository);
+    _themeBloc = ThemeBloc();
+    _authBloc.add(AppStarted());
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _authBloc.close();
+    _themeBloc.close();
+    _router.dispose();
+    super.dispose();
   }
 
   @override
@@ -72,8 +81,8 @@ class _MyAppState extends State<MyApp> {
       ),
       child: MultiBlocProvider(
         providers: [
-          BlocProvider(create: (context) => themeBloc),
-          BlocProvider(create: (context) => authBloc),
+          BlocProvider(create: (context) => _themeBloc),
+          BlocProvider(create: (context) => _authBloc),
         ],
         child: BlocBuilder<ThemeBloc, ThemeState>(
           builder: _buildWithTheme,
@@ -93,7 +102,7 @@ class _MyAppState extends State<MyApp> {
       theme: AppTheme.lightTheme,
       themeMode: state.themeMode,
       initialRoute: Routes.HOME,
-      onGenerateRoute: Router.generateRoute,
+      onGenerateRoute: _router.generateRoute,
       home: BlocBuilder<AuthBloc, AuthState>(
         builder: (context, state) {
           if (state is AuthUnauthenticated) {
@@ -108,12 +117,5 @@ class _MyAppState extends State<MyApp> {
         },
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    authBloc.close();
-    themeBloc.close();
-    super.dispose();
   }
 }

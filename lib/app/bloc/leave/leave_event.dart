@@ -4,10 +4,13 @@ abstract class LeaveEvent extends Equatable {
   const LeaveEvent();
 
   @override
-  List<Object> get props => [];
+  bool get stringify => true;
 }
 
-class LeaveScreenInitialized extends LeaveEvent {}
+class LeaveScreenInitialized extends LeaveEvent {
+  @override
+  List<Object> get props => [];
+}
 
 class LeaveAdded extends LeaveEvent {
   final Leave data;

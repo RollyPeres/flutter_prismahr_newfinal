@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_prismahr/app/bloc/leave/leave_bloc.dart';
+import 'package:flutter_prismahr/app/bloc/leave_create/leave_create_bloc.dart';
+import 'package:flutter_prismahr/app/bloc/leave_update/leave_update_bloc.dart';
 import 'package:flutter_prismahr/app/routes/route_arguments.dart';
 import 'package:flutter_prismahr/app/routes/routes.dart';
 import 'package:flutter_prismahr/app/views/account_info/contacts/contact.dart';
@@ -19,6 +23,8 @@ import 'package:flutter_prismahr/app/views/field_report/update.dart';
 import 'package:flutter_prismahr/app/views/home/home.dart';
 import 'package:flutter_prismahr/app/views/leave/create.dart';
 import 'package:flutter_prismahr/app/views/leave/index.dart';
+import 'package:flutter_prismahr/app/views/leave/show.dart';
+import 'package:flutter_prismahr/app/views/leave/update.dart';
 import 'package:flutter_prismahr/app/views/loan/create.dart';
 import 'package:flutter_prismahr/app/views/loan/index.dart';
 import 'package:flutter_prismahr/app/views/map.dart';
@@ -31,8 +37,12 @@ class Router {
   // Provide a function to handle named routes. Use this function to
   // identify the named route being pushed, and create the correct
   // screen.
-  static Route<dynamic> generateRoute(RouteSettings settings) {
-    RouteArguments args = settings.arguments;
+  final _leaveBloc = LeaveBloc();
+  final _leaveUpdateBloc = LeaveUpdateBloc();
+  final _leaveCreateBloc = LeaveCreateBloc();
+
+  Route<dynamic> generateRoute(RouteSettings settings) {
+    final RouteArguments args = settings.arguments;
 
     switch (settings.name) {
       case Routes.HOME:
@@ -122,12 +132,39 @@ class Router {
 
       case Routes.LEAVE:
         return MaterialPageRoute(
-          builder: (_) => LeaveScreen(),
+          builder: (_) => MultiBlocProvider(
+            providers: [
+              BlocProvider.value(value: _leaveBloc),
+              BlocProvider.value(value: _leaveUpdateBloc),
+              BlocProvider.value(value: _leaveCreateBloc),
+            ],
+            child: LeaveScreen(),
+          ),
         );
 
       case Routes.LEAVE_CREATE:
         return MaterialPageRoute(
           builder: (_) => LeaveCreateScreen(),
+        );
+
+      case Routes.LEAVE_SHOW:
+        return MaterialPageRoute(
+          builder: (_) => MultiBlocProvider(
+            providers: [
+              BlocProvider.value(value: _leaveBloc),
+              BlocProvider.value(value: _leaveUpdateBloc),
+              BlocProvider.value(value: _leaveCreateBloc),
+            ],
+            child: LeaveShowScreen(data: args.model),
+          ),
+        );
+
+      case Routes.LEAVE_UPDATE:
+        return MaterialPageRoute(
+          builder: (_) => BlocProvider.value(
+            value: _leaveUpdateBloc,
+            child: LeaveUpdateScreen(data: args.model),
+          ),
         );
 
       case Routes.REIMBURSE:
@@ -174,5 +211,13 @@ class Router {
           ),
         );
     }
+  }
+
+  void dispose() {
+    print('DISPOSE FROM ROUTER IS CALLED');
+
+    _leaveBloc.close();
+    _leaveUpdateBloc.close();
+    _leaveCreateBloc.close();
   }
 }

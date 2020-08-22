@@ -23,11 +23,28 @@ class LeaveProvider {
 
   Future<dynamic> store(Map<String, dynamic> data) async {
     try {
-      final Response response = await httpClient.post(
-        'leaves',
-        data: FormData.fromMap(data),
-        options: Options(contentType: 'application/x-www-form-urlencoded'),
+      final Response response = await httpClient.post('leaves', data: data);
+
+      if (response.statusCode == 422) {
+        return LeaveFormValidationException.fromJson(
+          response.data['errors'],
+        );
+      }
+
+      return Leave.fromJson(response.data['data']);
+    } catch (e) {
+      print(e);
+      return null;
+    }
+  }
+
+  Future<dynamic> update(Map<String, dynamic> data) async {
+    try {
+      final Response response = await httpClient.patch(
+        'leaves/${data['id']}',
+        data: data,
       );
+      print('response.data: ${response.data}');
 
       if (response.statusCode == 422) {
         return LeaveFormValidationException.fromJson(

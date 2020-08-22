@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_prismahr/app/bloc/leave/leave_bloc.dart';
+import 'package:flutter_prismahr/app/bloc/leave_update/leave_update_bloc.dart';
 import 'package:flutter_prismahr/app/components/empty.dart';
 import 'package:flutter_prismahr/app/data/models/leave_model.dart';
-import 'package:flutter_prismahr/app/routes/routes.dart';
 
 import 'components/leave_list.dart';
 import 'components/leave_list_loading.dart';
@@ -17,19 +17,25 @@ class LeaveScreen extends StatefulWidget {
 
 class _LeaveScreenState extends State<LeaveScreen> {
   LeaveBloc _leaveBloc;
+  LeaveUpdateBloc _leaveUpdateBloc;
   List<Leave> _leaves;
 
   @override
   void initState() {
+    print('INIT STATE CALLED');
     _leaves = <Leave>[];
-    _leaveBloc = LeaveBloc();
+    // FIXME: The event does not get called
+    _leaveBloc = BlocProvider.of<LeaveBloc>(context);
+    _leaveUpdateBloc = BlocProvider.of<LeaveUpdateBloc>(context);
     _leaveBloc.add(LeaveScreenInitialized());
     super.initState();
   }
 
   @override
   void dispose() {
+    print('DISPOSE CALLED');
     _leaveBloc.close();
+    _leaveUpdateBloc.close();
     super.dispose();
   }
 
@@ -50,69 +56,85 @@ class _LeaveScreenState extends State<LeaveScreen> {
             ),
           ),
           SliverToBoxAdapter(
-            child: BlocProvider(
-              create: (context) => _leaveBloc,
-              child: BlocListener<LeaveBloc, LeaveState>(
-                listener: (context, state) {
-                  if (state is LeaveLoaded) {
-                    _leaves = state.data;
-                  }
-
-                  if (state is LeaveCreated) {
-                    setState(() {
-                      _leaves.add(state.data);
-                    });
-                  }
-                },
-                child: BlocBuilder<LeaveBloc, LeaveState>(
-                  builder: (context, state) {
-                    print('CURRENT STATE IS $state');
-                    if (state is LeaveLoading) {
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 20,
-                          vertical: 30,
-                        ),
-                        child: LeaveListLoading(),
-                      );
+            child: MultiBlocListener(
+              listeners: [
+                BlocListener<LeaveBloc, LeaveState>(
+                  listener: (context, state) {
+                    if (state is LeaveLoaded) {
+                      setState(() {
+                        _leaves = state.data;
+                      });
                     }
 
-                    if (state is LeaveEmpty) {
-                      print('LEAVE EMPTY');
-                      return Padding(
-                        padding: const EdgeInsets.only(top: 100),
-                        child: Empty(),
-                      );
+                    if (state is LeaveCreated) {
+                      setState(() {
+                        _leaves.add(state.data);
+                      });
                     }
-
-                    return LeaveList(data: _leaves);
                   },
                 ),
+                BlocListener<LeaveUpdateBloc, LeaveUpdateState>(
+                  listener: (context, state) {
+                    if (state is LeaveUpdateSuccess) {
+                      int index = _leaves.indexWhere((leave) {
+                        return leave.id == state.data.id;
+                      });
+
+                      setState(() {
+                        _leaves[index] = state.data;
+                        _leaveUpdateBloc.add(ResetState());
+                      });
+                    }
+                  },
+                ),
+              ],
+              child: BlocBuilder<LeaveBloc, LeaveState>(
+                builder: (context, state) {
+                  if (state is LeaveLoading) {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 20,
+                        vertical: 30,
+                      ),
+                      child: LeaveListLoading(),
+                    );
+                  }
+
+                  if (state is LeaveEmpty) {
+                    return Padding(
+                      padding: const EdgeInsets.only(top: 100),
+                      child: Empty(),
+                    );
+                  }
+
+                  return LeaveList(data: _leaves);
+                },
               ),
             ),
           ),
         ],
       ),
-      floatingActionButton: BlocProvider(
-        create: (context) => _leaveBloc,
-        child: BlocBuilder<LeaveBloc, LeaveState>(
-          builder: (context, state) {
-            if (state is! LeaveLoading) {
-              return FloatingActionButton(
-                child: Icon(Icons.add),
-                onPressed: () async {
-                  final data = await Navigator.of(context)
-                      .pushNamed(Routes.LEAVE_CREATE);
+      floatingActionButton: BlocBuilder<LeaveBloc, LeaveState>(
+        builder: (context, state) {
+          if (state is! LeaveLoading) {
+            return FloatingActionButton(
+              child: Icon(Icons.add),
+              onPressed: () async {
+                _leaveBloc.add(LeaveScreenInitialized());
+                print(await _leaveBloc.length);
 
-                  if (data != null) {
-                    _leaveBloc.add(LeaveAdded(data: data));
-                  }
-                },
-              );
-            }
-            return SizedBox();
-          },
-        ),
+                // final data = await Navigator.of(context).pushNamed(
+                //   Routes.LEAVE_CREATE,
+                // );
+
+                // if (data != null) {
+                //   _leaveBloc.add(LeaveAdded(data: data));
+                // }
+              },
+            );
+          }
+          return SizedBox();
+        },
       ),
     );
   }

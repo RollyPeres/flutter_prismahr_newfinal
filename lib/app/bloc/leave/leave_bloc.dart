@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_prismahr/app/data/models/leave_model.dart';
 import 'package:flutter_prismahr/app/data/repositories/leave_repository.dart';
 import 'package:meta/meta.dart';
@@ -23,7 +24,7 @@ class LeaveBloc extends Bloc<LeaveEvent, LeaveState> {
 
       try {
         final response = await repository.fetch();
-        if (response is List<Leave> && response.isNotEmpty) {
+        if (response != null) {
           yield LeaveLoaded(data: response);
         } else {
           yield LeaveEmpty();
